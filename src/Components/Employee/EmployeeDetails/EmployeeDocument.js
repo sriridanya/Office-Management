@@ -39,7 +39,7 @@ class EmployeeDocument extends React.Component {
 {this.props.empdoc.map((doc,index)=>(
     <div key={index} className="col-4"style={{float:"left"}}>
 
-        <img src={doc.img} width="158" height="158"  onClick={()=>{this._onButtonClick(doc,index)}}/>
+        <img src={doc.img} alt="document" width="158" height="158"  onClick={()=>{this._onButtonClick(doc,index)}}/>
        
     </div>
 

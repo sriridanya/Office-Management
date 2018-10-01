@@ -2,6 +2,7 @@ import React,{ Component } from "react";
 import employeedata from "../employeedata";
 // import empdata from '../employeedata'
 // import {Link}from "react-router-dom"; 
+import BasicEdit from '../EmployeeEdits/BasicEdit'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -43,7 +44,8 @@ class EmployeeDetails extends Component{
     super(props);
     this.state = {
       showComponent: false,
-      
+      basicEdit:false,
+    id:'',
       prjdetails:{
         prjname:'',
         prjdescription:'',
@@ -51,6 +53,8 @@ class EmployeeDetails extends Component{
       }
     };
     this._onButtonClick = this._onButtonClick.bind(this);
+    
+    this.handleBasicEdit=this.handleBasicEdit.bind(this);
   }
 
   _onButtonClick(prj,index) {
@@ -60,6 +64,12 @@ class EmployeeDetails extends Component{
      
     });
 
+  }
+ 
+  handleBasicEdit(Id){
+    this.setState({
+      basicEdit: true,
+      id:Id});
   }
 render(){
     const { classes } = this.props;
@@ -91,13 +101,16 @@ const Id=this.props.match.params.id;
          
           </Grid>
           <Grid item>
-           <EditIcon/>
+           <EditIcon  onClick={() => this.handleBasicEdit(Id)}/>
           </Grid>
          
         </Grid>
         
       </Grid>
-      
+      {this.state.basicEdit ?
+          <BasicEdit Id={this.state.id} />:
+           null
+        } 
     </Paper>
 <Paper className={classes.paper}>
 <Typography gutterBottom variant="headline" align="left"> Project Works 
@@ -116,10 +129,7 @@ const Id=this.props.match.params.id;
 }
 
 </Grid>
-{this.state.showComponent ?
-          <EmployeeProject prjname={this.state.prjdetails.prjname} key={this.state.prjdetails.key} prjdetail={this.state.prjdetails.prjdescription} />:
-           null
-        } 
+
         
       
 </Paper>
@@ -148,7 +158,10 @@ const Id=this.props.match.params.id;
         
       
 </Paper>
-      
+{this.state.showComponent ?
+  <EmployeeProject prjname={this.state.prjdetails.prjname} key={this.state.prjdetails.key} prjdetail={this.state.prjdetails.prjdescription} />:
+   null
+} 
       </div>
         </div>
       

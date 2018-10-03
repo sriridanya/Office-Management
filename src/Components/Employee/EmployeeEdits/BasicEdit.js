@@ -3,16 +3,17 @@ import empdata from '../employeedata'
 // import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import compose from 'recompose/compose'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+// import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -37,8 +38,11 @@ class BasicEdit extends Component{
         name: empdata[this.props.Id-1].emp_name,
     email: empdata[this.props.Id-1].email,
     mobile: empdata[this.props.Id-1].mobile,
-    id:empdata[this.props.Id-1].key
+    id:empdata[this.props.Id-1].key,
+    submmited:false
       };
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
     }
    
       handleChange = name => event => {
@@ -46,11 +50,16 @@ class BasicEdit extends Component{
           [name]: event.target.value,
         });
       };
+      handleSubmit() {
+        this.setState({ submitted: true }, () => {
+            setTimeout(() => this.setState({ submitted: false,prj_description:'',prj_duration:'',prj_manager:'',prj_members:'',prj_name:'' }), 5000);
+        });
+    }
      
       render() {
         const { fullScreen } = this.props;
         const { classes } = this.props;
-        
+        const {  submitted } = this.state;
         return (
           <div>
             <Dialog
@@ -67,50 +76,61 @@ class BasicEdit extends Component{
             >
               <DialogTitle id="responsive-dialog-title">Edit Basic Information</DialogTitle>
               <DialogContent>
-              <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-        required
-          id="employee-name"
+              <ValidatorForm
+                ref="form"
+                onSubmit={this.handleSubmit}
+            >
+        <TextValidator
+       
+          name="employee-name"
           label="Name"
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange('name')}
-        
+          validators={['required']}
+          errorMessages={['this field is required']}
           margin="normal"
         />
-        <TextField
-        required
-          id="employee-email"
+        <TextValidator
+
+          name="employee-email"
           label="Email"
           onChange={this.handleChange('email')}
           value={this.state.email}
-          
+          validators={['required', 'isEmail']}
+          errorMessages={['this field is required', 'email is not valid']}
           className={classes.textField}
           margin="normal"
         />
-        <TextField
-          required
-          id="mobile"
+        <TextValidator
+        
+          name="mobile"
           label="Mobile"
-         
+          onChange={this.handleChange('mobile')}
           value={this.state.mobile}
+          validators={[ 'matchRegexp:^[0-9]{10}$']}
+          errorMessages={[ 'Enter valid no']}
           className={classes.textField}
           margin="normal"
         />
         
-       
-     
-       
-      </form>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.props.handleClose} color="primary">
-                  Save
+        <Button  color="primary"type="submit"
+                    disabled={submitted}
+                >  {
+                  (submitted && 'Project is submitted')
+                  || (!submitted && 'Submit')
+              }
                 </Button>
                 <Button onClick={this.props.handleClose} color="primary" autoFocus>
                  Cancel
                 </Button>
-              </DialogActions>
+     
+       
+      </ValidatorForm>
+              </DialogContent>
+           
+            
+           
             </Dialog>
           </div>
         );

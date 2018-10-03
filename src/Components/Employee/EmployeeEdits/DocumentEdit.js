@@ -1,61 +1,68 @@
 import React, { Component } from 'react';
 // import empdata from '../employeedata'
 // import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-// import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import compose from 'recompose/compose'
+// import { withStyles } from '@material-ui/core/styles';
+// // import MenuItem from '@material-ui/core/MenuItem';
+// import TextField from '@material-ui/core/TextField';
+// import compose from 'recompose/compose'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dropzone from 'react-dropzone';
-import request from 'superagent';
+// import request from 'superagent';
 
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import './DocumentEdit.css'
-const CLOUDINARY_UPLOAD_PRESET = 'your_upload_preset_id';
-const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/your_cloudinary_app_name/upload';
+import { ValidatorForm} from 'react-material-ui-form-validator';
 
 class DocumentEdit extends Component{
     constructor(props) {
         super(props);
     
         this.state = {
-          uploadedFileCloudinaryUrl: ''
+          uploadedFile:'',
+          uploadedFileSrc: null,
+          submitted: false,
+
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
       }
+      handleSubmit() {
+        if(this.state.uploadedFile === ''){
+          alert("Upload a file to save")
+        }
+        else{
+        this.setState({ submitted: true
+         
+        });
+      }
+    }
+     
       onImageDrop(files) {
+       
         this.setState({
           uploadedFile: files[0]
-        });
-    
-        this.handleImageUpload(files[0]);
+        }); 
+       
+    const myFileItemReader= new FileReader()
+    myFileItemReader.addEventListener("load",()=>{
+      console.log(myFileItemReader.result)
+      this.setState({uploadedFileSrc:myFileItemReader.result})
+    },false)
+    myFileItemReader.readAsDataURL(this.state.uploadedFile)
+        
       }
-      handleImageUpload(file) {
-        let upload = request.post(CLOUDINARY_UPLOAD_URL)
-                            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-                            .field('file', file);
-    
-        upload.end((err, response) => {
-          if (err) {
-            console.error(err);
-          }
-    
-          if (response.body.secure_url !== '') {
-            this.setState({
-              uploadedFileCloudinaryUrl: response.body.secure_url
-            });
-          }
-        });
-      }
+     
+     
      
       render() {
         const { fullScreen } = this.props;
-       
+       const {uploadedFileSrc}=this.state;
+       const { submitted } = this.state;
         return (
           <div>
             <Dialog
@@ -69,31 +76,47 @@ class DocumentEdit extends Component{
               
               aria-labelledby="responsive-dialog-title"
               key={this.state.id}
-            >
+            >  
+       
+            
               <DialogTitle  id="responsive-dialog-title">Add Documents </DialogTitle>
-              <DialogContent style={{width:'600px'}}>
-              <Dropzone
+              <DialogContent style={{width:'600px'}}> 
+              <ValidatorForm
+                     ref="form"
+                     onSubmit={this.handleSubmit}
+                     onError={errors => console.log(errors)}
+                 >
+             
+             {uploadedFileSrc !=null ?<div> <img src={uploadedFileSrc} alt="document"height="250"width="300"/></div> :
+                   
+            <Dropzone
       multiple={false}
       accept="image/*"
       onDrop={this.onImageDrop.bind(this)}>
       <p>Drop an image or click to select a file to upload.</p>
     </Dropzone> 
-    <div>
-        {this.state.uploadedFileCloudinaryUrl === '' ? null :
-        <div>
-          <p>{this.state.uploadedFile.name}</p>
-          <img src={this.state.uploadedFileCloudinaryUrl} />
-        </div>}
-      </div>
-      </DialogContent>
-              <DialogActions>
-                <Button onClick={this.props.handleClose} color="primary">
-                  Save
-                </Button>
+              }
+             
+          
+    
+             
+              <Button   
+            color="primary" 
+                  //  onClick={this.handleSubmit}
+                   
+                   type="submit"
+                   disabled={submitted}
+               >
+                   {
+                       (submitted && 'Document submitted ')
+                       || (!submitted && 'Submit')
+                   }</Button>
                 <Button onClick={this.props.handleClose} color="primary" autoFocus>
                  Cancel
                 </Button>
-              </DialogActions>
+                </ValidatorForm>
+          
+                </DialogContent>
             </Dialog>
           </div>
         );

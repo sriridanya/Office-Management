@@ -3,23 +3,29 @@ import React, { Component } from 'react';
 // import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import compose from 'recompose/compose'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+// import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 // import AddIcon from '@material-ui/icons/Add';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 const styles = theme => ({
     container: {
       display: 'flex',
       flexWrap: 'wrap',
     },
     textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 500,
+    },
+    smalltextField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: 200,
@@ -34,12 +40,15 @@ class ProjectEdit extends Component{
   constructor(props){
     super(props)
       this.state = {
-     
-       prj_name: "Title",
-    prj_description: "Description",
-    team_size: "Size",
-    
+       prj_name: "",
+    prj_description: "",
+    prj_duration: "",
+    prj_manager:"",
+    prj_members:"",
+    submmited:false
       };
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
     }
    
       handleChange = name => event => {
@@ -47,11 +56,16 @@ class ProjectEdit extends Component{
           [name]: event.target.value,
         });
       };
+      handleSubmit() {
+        this.setState({ submitted: true }, () => {
+            setTimeout(() => this.setState({ submitted: false,prj_description:'',prj_duration:'',prj_manager:'',prj_members:'',prj_name:'' }), 5000);
+        });
+    }
      
       render() {
         const { fullScreen } = this.props;
         const { classes } = this.props;
-        
+        const {  submitted } = this.state;
         return (
           <div>
             <Dialog
@@ -68,84 +82,76 @@ class ProjectEdit extends Component{
             >
               <DialogTitle id="responsive-dialog-title">Add Project Details</DialogTitle>
               <DialogContent>
-              <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-        required
-          id="project-title"
-          label="Project Title"
-          style={{ margin: 8 }}
-          placeholder="Title"
-          multiline
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-        required
-          id="prj_description"
-          label="Project Description"
-          style={{ margin: 8 }}
-          placeholder="Description"
-          multiline
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-   
-        <TextField
-          required
-          id="prj-duration"
-          label="Project Duration"
-          style={{ margin: 8 }}
-          placeholder="size"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          margin="normal"
-        />
-            <TextField
-          required
-          id="prj-manager"
-          label="Project Manager" 
-          style={{ margin: 8 }}
-
-          InputLabelProps={{
-            shrink: true,
-          }}
-         placeholder="manager"
+              <ValidatorForm
+                ref="form"
+                onSubmit={this.handleSubmit}
+            >
+ <TextValidator
+        
           
-          margin="normal"
+          label="Project Title"
+          onChange={this.handleChange('prj_name')}
+          name="project-title"
+          className={classes.textField}
+          value={this.state.prj_name}
+          validators={['required']}
+          errorMessages={['this field is required']}
+        /><br/>
+        <TextValidator
+       label="Project Description"
+       onChange={this.handleChange('prj_description')}
+        name="prj_description"
+        value={this.state.prj_description}
+        validators={['required']}
+        errorMessages={['this field is required']}
+        className={classes.textField}
+        /><br/>
+   
+        <TextValidator
+        label="Project Duration"
+        onChange={this.handleChange('prj_duration')}
+          name="prj-duration"
+          value={this.state.prj_duration}
+          validators={['required']}
+          errorMessages={['this field is required']}   
+          className={classes.smalltextField}
         />
+            <TextValidator
+          
+          name="prj-manager"
+          onChange={this.handleChange('prj_manager')}
+          label="Project Manager" 
+          value={this.state.prj_manager}
+          validators={['required']}
+          errorMessages={['this field is required']}
+          className={classes.smalltextField}
+        /><br/>
            
         
-        <TextField
-        required
-          id="prj_members"
+        <TextValidator
+      
           label="Team Members"
-          style={{ margin: 8 }}
-          placeholder="Members"
-          multiline
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          onChange={this.handleChange('prj_members')}
+          name="prj_members"
+          value={this.state.prj_members}
+          validators={['required']}
+          errorMessages={['this field is required']}
+          className={classes.textField}
         />
-       
-      </form>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.props.handleClose} color="primary">
-                  Save
+         <Button  color="primary"type="submit"
+                    disabled={submitted}
+                >  {
+                  (submitted && 'Project is submitted')
+                  || (!submitted && 'Submit')
+              }
                 </Button>
                 <Button onClick={this.props.handleClose} color="primary" autoFocus>
                  Cancel
                 </Button>
-              </DialogActions>
+       
+     </ValidatorForm>
+              </DialogContent>
+             
             </Dialog>
           </div>
         );

@@ -158,6 +158,9 @@ class EmployeeDetails extends Component{
         })
     
     }
+    componentDidMount(){
+      this.props.navhandler(employeedata[this.props.match.params.id-1].emp_name)
+    }
 render(){
     const { classes } = this.props;
 const Id=this.props.match.params.id;

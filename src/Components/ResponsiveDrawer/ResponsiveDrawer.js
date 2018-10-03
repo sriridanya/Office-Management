@@ -26,6 +26,7 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     width: '100%',
+
   },
   appBar: {
     position: 'absolute',
@@ -54,14 +55,21 @@ const styles = theme => ({
 });
 
 class ResponsiveDrawer extends React.Component {
-  state = {
-    mobileOpen: false,
-  };
-
+  constructor(props){
+    super(props)
+   this.state = {
+      mobileOpen: false,
+      navtitile:"Office Management "
+    };
+  this.handleAppBar=this.handleAppBar.bind(this)
+  }
+ 
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
-
+handleAppBar=(title)=>{
+this.setState({navtitile:title})
+}
   render() {
     const { classes, theme } = this.props;
 
@@ -88,7 +96,7 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>
-            Office Management
+            {this.state.navtitile}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -122,9 +130,9 @@ class ResponsiveDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-          <Route exact path="/" component={Dashboard}/>
-            <Route exact path="/employee" component={Employee}/>
-            <Route exact path="/employeedetail/:id" component={EmployeeDetails}/>
+          <Route  exact path="/" component={Dashboard} />
+            <Route exact path="/employee"   render={(props) => <Employee {...props} navhandler={this.handleAppBar} />}/>
+            <Route exact path="/employeedetail/:id"  render={(props) => <EmployeeDetails {...props} navhandler={this.handleAppBar} />}/>
           </Switch>
         
         </main>

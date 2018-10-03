@@ -63,12 +63,15 @@ class Employee extends Component {
   // // });
    
   // }
+  componentDidMount(){
+    this.props.navhandler('Employee List')
+  }
   render(){
   const { classes } = this.props;
- 
+
   return (
     <div className="row">
-   
+    
        {tileData.map(tile => (
           <div key={tile.key} className="col-xs-12 col-sm-6 col-md-4"style={{padding:'10px'}}>
       <Card className={classes.card}>

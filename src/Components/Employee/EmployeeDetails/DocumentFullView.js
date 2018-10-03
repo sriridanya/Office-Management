@@ -13,14 +13,7 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 
   
 class DocumentFullView extends Component{
-    state = {
-        open: true,
-    
-      };
-    
-      handleClose = () => {
-        this.setState({ open: false });
-      };
+ 
 render(){
     const { fullScreen } = this.props;
    
@@ -33,8 +26,8 @@ render(){
         // >
         <Dialog
         fullScreen={fullScreen}
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={this.props.open}
+          onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
           key={this.props.key}
       >
@@ -44,7 +37,7 @@ render(){
         <img src= {this.props.img} alt="document" height='100%' width='100%'/>
         </DialogContent>
         <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.handleClose} color="primary">
              Close
             </Button>
        

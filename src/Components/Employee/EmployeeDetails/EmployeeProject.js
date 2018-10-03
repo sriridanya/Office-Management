@@ -13,14 +13,8 @@ import { Typography } from '@material-ui/core';
 
   
 class EmployeeProject extends Component{
-    state = {
-        open: true,
-    
-      };
-    
-      handleClose = () => {
-        this.setState({ open: false });
-      };
+
+   
 render(){
     const { fullScreen } = this.props;
    
@@ -33,8 +27,8 @@ render(){
         // >
         <Dialog
         fullScreen={fullScreen}
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={this.props.open}
+          onClose={this.props.handleClose}
           aria-labelledby="responsive-dialog-title"
           key={this.props.key}
       >
@@ -46,7 +40,7 @@ render(){
          </Typography>
         </DialogContent>
         <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.handleClose} color="primary">
              Close
             </Button>
        

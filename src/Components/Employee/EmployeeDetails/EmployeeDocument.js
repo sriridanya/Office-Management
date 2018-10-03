@@ -15,6 +15,7 @@ class EmployeeDocument extends React.Component {
           
     
         this._onButtonClick = this._onButtonClick.bind(this);
+        this._onButtonClose=this._onButtonClose.bind(this)
     
       }
 
@@ -29,7 +30,14 @@ class EmployeeDocument extends React.Component {
     
       }
   
-
+   
+      _onButtonClose() {
+        this.setState({
+          showComponent: false,
+          
+        });
+    
+      }
   render() {
     
  
@@ -48,7 +56,7 @@ class EmployeeDocument extends React.Component {
 }
 
      {this.state.showComponent ?
-          <DocumentFullView img={this.state.docimg}key={this.state.key}  />:
+          <DocumentFullView open={this.state.showComponent} handleClose={this._onButtonClose}img={this.state.docimg}key={this.state.key}  />:
            null
         } 
         

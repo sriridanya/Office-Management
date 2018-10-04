@@ -12,9 +12,10 @@ import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import Employee from '../Employee/Employee';
 import { mailFolderListItems, otherMailFolderListItems } from './drawerdata';
-import {Route,Switch}from'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import EmployeeDetails from '../Employee/EmployeeDetails/EmployeeDetails';
+import Project from '../Project/Project'
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -55,21 +56,21 @@ const styles = theme => ({
 });
 
 class ResponsiveDrawer extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-   this.state = {
+    this.state = {
       mobileOpen: false,
-      navtitile:"Office Management "
+      navtitile: "Office Management "
     };
-  this.handleAppBar=this.handleAppBar.bind(this)
+    this.handleAppBar = this.handleAppBar.bind(this)
   }
- 
+
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
-handleAppBar=(title)=>{
-this.setState({navtitile:title})
-}
+  handleAppBar = (title) => {
+    this.setState({ navtitile: title })
+  }
   render() {
     const { classes, theme } = this.props;
 
@@ -96,7 +97,7 @@ this.setState({navtitile:title})
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>
-            {this.state.navtitile}
+              {this.state.navtitile}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -130,11 +131,12 @@ this.setState({navtitile:title})
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-          <Route  exact path="/" component={Dashboard} />
-            <Route exact path="/employee"   render={(props) => <Employee {...props} navhandler={this.handleAppBar} />}/>
-            <Route exact path="/employeedetail/:id"  render={(props) => <EmployeeDetails {...props} navhandler={this.handleAppBar} />}/>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/employee" render={(props) => <Employee {...props} navhandler={this.handleAppBar} />} />
+            <Route exact path="/employeedetail/:id" render={(props) => <EmployeeDetails {...props} navhandler={this.handleAppBar} />} />
+            <Route exact path="/Project" render={(props)=><Project {...props} navhandler={this.handleAppBar}/>}/>
           </Switch>
-        
+
         </main>
       </div>
     );

@@ -9,36 +9,40 @@ import PayrollIcon from '@material-ui/icons/AccountBalanceWallet';
 import ForumIcon from '@material-ui/icons/Forum';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
-import {NavLink}from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 export const mailFolderListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>
-     <NavLink exact to='/'><ListItemText primary="Dashboard" /></NavLink> 
+      <NavLink exact to='/'><ListItemText primary="Dashboard" /></NavLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <EmployeeIcon />
       </ListItemIcon>
-     <NavLink to={
-             {
-               pathname:'/employee'
-             }
-           }  > <ListItemText primary="Employee" /></NavLink>
+      <NavLink to={
+        {
+          pathname: '/employee'
+        }
+      }  > <ListItemText primary="Employee" /></NavLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <ProjectIcon />
-      </ListItemIcon>
-     <ListItemText primary="Projects" />
+      </ListItemIcon><NavLink to={
+        {
+          pathname: '/project'
+        }
+      }  >
+      <ListItemText primary="Projects" /></NavLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <PayrollIcon />
       </ListItemIcon>
-    <ListItemText primary="Payroll" />
+      <ListItemText primary="Payroll" />
     </ListItem>
   </div>
 );

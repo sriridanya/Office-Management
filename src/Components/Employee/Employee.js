@@ -10,11 +10,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Employeeimage from './EmployeeDetails/Employeeimage';
 // import EmployeeDetails from'./EmployeeDetails/EmployeeDetails';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 // import Dialog from '@material-ui/core/Dialog';
 // import DialogContent from '@material-ui/core/DialogContent';
 // import DialogTitle from '@material-ui/core/DialogTitle';
-import tileData from'./employeedata';
+import tileData from './employeedata';
 // import withMobileDialog from '@material-ui/core/withMobileDialog';
 const styles = {
   card: {
@@ -34,11 +34,11 @@ class Employee extends Component {
     super(props);
     this.state = {
       showComponent: false,
-      showFullDetail:false,
-      empdetails:{
-        empname:'',
-        key:'',
-        empimg:{},
+      showFullDetail: false,
+      empdetails: {
+        empname: '',
+        key: '',
+        empimg: {},
       }
     };
     this._onButtonClick = this._onButtonClick.bind(this);
@@ -47,7 +47,7 @@ class Employee extends Component {
   _onButtonClick(tile) {
     this.setState({
       showComponent: true,
-      empdetails:{empname:tile.emp_name,empimg:tile.img,key:tile.key}
+      empdetails: { empname: tile.emp_name, empimg: tile.img, key: tile.key }
     });
 
   }
@@ -61,66 +61,66 @@ class Employee extends Component {
   // //         avatar:this.state.empdetails.empimg
   // //     }
   // // });
-   
+
   // }
-  componentDidMount(){
+  componentDidMount() {
     this.props.navhandler('Employee List')
   }
-  render(){
-  const { classes } = this.props;
+  render() {
+    const { classes } = this.props;
 
-  return (
-    <div className="row">
-    
-       {tileData.map(tile => (
-          <div key={tile.key} className="col-xs-12 col-sm-6 col-md-4"style={{padding:'10px'}}>
-      <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          onClick={()=>{this._onButtonClick(tile)}}
-          component="img"
-          className={classes.media}
-          height="200"
-          image="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-          title=  {tile.emp_name}
-        
-        />
-           
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-          {tile.emp_name}
-          </Typography>
-    
-        </CardContent>
-      </CardActionArea>
-      <CardActions style={{justifyContent: 'center'}}>
-       <Link to={ `/employeedetail/${tile.key}`}><Button size="small" color="primary"
-        //  onClick={()=>{
-        //    this._onViewClick();
-        //  }}
-         >
-          View Details
+    return (
+      <div className="row">
+
+        {tileData.map(tile => (
+          <div key={tile.key} className="col-xs-12 col-sm-6 col-md-4" style={{ padding: '10px' }}>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  onClick={() => { this._onButtonClick(tile) }}
+                  component="img"
+                  className={classes.media}
+                  height="200"
+                  image="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
+                  title={tile.emp_name}
+
+                />
+
+                <CardContent>
+                  <Typography gutterBottom variant="headline" component="h2">
+                    {tile.emp_name}
+                  </Typography>
+
+                </CardContent>
+              </CardActionArea>
+              <CardActions style={{ justifyContent: 'center' }}>
+                <Link to={`/employeedetail/${tile.key}`}><Button size="small" color="primary"
+                //  onClick={()=>{
+                //    this._onViewClick();
+                //  }}
+                >
+                  View Details
         </Button>
-        </Link> 
-      </CardActions>
-    </Card>
+                </Link>
+              </CardActions>
+            </Card>
 
-    </div>
-       ))}
-      
-      {this.state.showComponent ?
-          <Employeeimage name={this.state.empdetails.empname} key={this.state.empdetails.key} image={this.state.empdetails.empimg} />:
-           null
-        } 
-        
-      
+          </div>
+        ))}
+
+        {this.state.showComponent ?
+          <Employeeimage name={this.state.empdetails.empname} key={this.state.empdetails.key} image={this.state.empdetails.empimg} /> :
+          null
+        }
+
+
         {/* {this.state.showFullDetail ?
           <EmployeeDetails />:
            null
         }  */}
-    </div>
-  );
-}
+      </div>
+    );
+  }
 }
 
 Employee.propTypes = {
@@ -128,4 +128,4 @@ Employee.propTypes = {
 
 };
 
-export default  withStyles(styles) (Employee);
+export default withStyles(styles)(Employee);

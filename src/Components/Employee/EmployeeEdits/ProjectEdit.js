@@ -8,6 +8,7 @@ import compose from 'recompose/compose'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import TextField from '@material-ui/core/TextField';
 // import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
@@ -133,15 +134,18 @@ class ProjectEdit extends Component {
                 errorMessages={['this field is required']}
                 className={classes.smalltextField}
               />
-                <TextValidator
-                label="Start Date"
-                onChange={this.handleChange('start_date')}
-                name="start_date"
-                value={this.state.start_date}
-                validators={['required']}
-                errorMessages={['this field is required']}
-                className={classes.smalltextField}
-              />
+              <TextField
+        id="date"
+        label="Start Date"
+        type="date"
+        defaultValue="2016-05-24"
+        className={classes.smalltextField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={this.handleChange('start_date')}
+      />
+ 
                 <TextValidator
                 label="Status"
                 onChange={this.handleChange('status')}

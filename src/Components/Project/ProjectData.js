@@ -195,9 +195,9 @@ const projectdata = [
         prj_manager:"Finibus Bonorum",
         prj_description:"Phasellus fermentum elementum sem eu volutpat. Proin eleifend metus sit amet diam accumsan, non vehicula urna interdum. Duis auctor volutpat justo, fermentum imperdiet enim. Ut eget ex et tortor euismod malesuada. Fusce vitae. ",
         start_date:"aug 3 2018",
-        duration:"90 days",
+        duration:"60 days",
         technology:"React Native",
-        status:"Going on",
+        status:"Completed",
         prj_team:[{
             emp_name:"employee1",
             role:"Team Lead"
@@ -366,7 +366,7 @@ const projectdata = [
         prj_name:"Sed ut perspiciatis unde omnis iste natus error sit ",
         prj_manager:"Bonorum",
         prj_description:" Praesent ultrices mauris in risus bibendum tincidunt nec congue nibh. Integer in laoreet neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer suscipit cursus consequat. Morbi egestas convallis scelerisque. Proin congue consequat felis, id luctus ipsum. Praesent justo lacus, bibendum faucibus velit ac, tempor vestibulum massa. Donec cursus ligula nibh, sit amet sollicitudin arcu tempus sit amet. Sed a ultricies augue, pretium faucibus augue. Vivamus non scelerisque ante, at interdum orci. Nulla quis enim sagittis, molestie felis nec, egestas justo. ",
-        start_date:" dec 9 2017",
+        start_date:" jan 9 2018",
         duration:"180 days",
         technology:"React Node",
         status:"Completed",
@@ -400,7 +400,7 @@ const projectdata = [
         start_date:"jul 27 2018",
         duration:"120 Days",
         technology:"Java",
-        status:"Going on",
+        status:"Ongoing",
         prj_team:[{
             emp_name:"employee6",
             role:"Team Lead"
@@ -434,7 +434,7 @@ const projectdata = [
         start_date:"mar 7 2018",
         duration:"240 Days",
         technology:"Python",
-        status:"Going on",
+        status:"Ongoing",
         prj_team:[{
             emp_name:"employee1",
             role:"Team Lead"

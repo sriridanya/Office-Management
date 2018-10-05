@@ -11,6 +11,7 @@ const styles = theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing.unit,
+   
   },
 });
 
@@ -56,7 +57,7 @@ class  FloatingActionButtons extends Component {
   return (
     <div>
  
-      <Button variant="extendedFab" aria-label="Add"  onClick={this.handleProjectEdit} className={classes.button}>
+      <Button  variant="extendedFab" aria-label="Add" style={{ backgroundColor:"#fefefe"}} onClick={this.handleProjectEdit} className={classes.button}>
         <AddIcon className={classes.extendedIcon} />
        Add New Project
       </Button>

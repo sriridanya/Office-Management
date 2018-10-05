@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
-// import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import compose from 'recompose/compose'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -12,9 +12,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import AddIcon from '@material-ui/icons/Add';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 // import AddIcon from '@material-ui/icons/Add';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -33,6 +35,9 @@ const styles = theme => ({
   dense: {
     marginTop: 19,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
 
 });
 
@@ -43,12 +48,18 @@ class ProjectEdit extends Component {
       prj_name: "",
       prj_description: "",
       prj_duration: "",
+      start_date:"",
+      status:"",
+      technology:"",
       prj_manager: "",
-      prj_members: "",
-      submmited: false
+   
+      
+      submmited: false,
+      add_team:[{   prj_members:'',role:''}],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAddTeam=this.handleAddTeam.bind(this);
   }
 
   handleChange = name => event => {
@@ -61,11 +72,17 @@ class ProjectEdit extends Component {
       setTimeout(() => this.setState({ submitted: false, prj_description: '', prj_duration: '', prj_manager: '', prj_members: '', prj_name: '' }), 5000);
     });
   }
-
+  handleAddTeam= (e) => {
+    this.setState((prevState) => ({
+      add_team: [...prevState.add_team, {prj_members:"",role:""}],
+    }));
+  }
   render() {
     const { fullScreen } = this.props;
     const { classes } = this.props;
-    const { submitted } = this.state;
+    const { submitted } = this.state; 
+    let {add_team} = this.state
+
     return (
       <div>
         <Dialog
@@ -116,6 +133,25 @@ class ProjectEdit extends Component {
                 errorMessages={['this field is required']}
                 className={classes.smalltextField}
               />
+                <TextValidator
+                label="Start Date"
+                onChange={this.handleChange('start_date')}
+                name="start_date"
+                value={this.state.start_date}
+                validators={['required']}
+                errorMessages={['this field is required']}
+                className={classes.smalltextField}
+              />
+                <TextValidator
+                label="Status"
+                onChange={this.handleChange('status')}
+                name="status"
+                value={this.state.status}
+                validators={['required']}
+                errorMessages={['this field is required']}
+                className={classes.smalltextField}
+              />
+          
               <TextValidator
 
                 name="prj-manager"
@@ -125,20 +161,56 @@ class ProjectEdit extends Component {
                 validators={['required']}
                 errorMessages={['this field is required']}
                 className={classes.smalltextField}
-              /><br />
+              /><br /><br />
 
+ <Typography gutterBottom variant="title" component="h2">
+                 Add Team Members
+                  </Typography>
+         
+             
+             
+        {
+          add_team.map((val, idx)=> {
+           
+            return (
+              <div key={idx}>
+    <TextValidator
 
+label="Team Members"
+onChange={this.handleChange('add_team.prj_members')}
+name="prj_members"
+value={this.state.add_team.prj_members}
+validators={['required']}
+errorMessages={['this field is required']}
+className={classes.textField}
+/> 
+<TextValidator
+
+label="Role"
+onChange={this.handleChange('add_team.role')}
+name="role"
+value={this.state.add_team.role}
+validators={['required']}
+errorMessages={['this field is required']}
+className={classes.textField}
+/>
+              </div>
+            )
+          })
+        }
+             
+              <Button variant="fab"  onClick={this.handleAddTeam.bind(this)} mini color="secondary" aria-label="Add" className={classes.button}>
+          <AddIcon />
+        </Button> <br/>
               <TextValidator
-
-                label="Team Members"
-                onChange={this.handleChange('prj_members')}
-                name="prj_members"
-                value={this.state.prj_members}
+                label="Technology"
+                onChange={this.handleChange('technology')}
+                name="Technology"
+                value={this.state.technology}
                 validators={['required']}
                 errorMessages={['this field is required']}
-                className={classes.textField}
+                className={classes.smalltextField}
               />
-              <br/>
               <Button color="primary" type="submit"
                 disabled={submitted}
               >  {

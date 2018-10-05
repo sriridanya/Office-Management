@@ -56,8 +56,8 @@ class  FloatingActionButtons extends Component {
   return (
     <div>
  
-      <Button variant="extendedFab" aria-label="Add" className={classes.button}>
-        <AddIcon className={classes.extendedIcon} onClick={this.handleProjectEdit} />
+      <Button variant="extendedFab" aria-label="Add"  onClick={this.handleProjectEdit} className={classes.button}>
+        <AddIcon className={classes.extendedIcon} />
        Add New Project
       </Button>
       {this.state.projectEdit ?

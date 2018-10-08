@@ -128,7 +128,7 @@ class ResponsiveDrawer extends React.Component {
             {drawer}
           </Drawer>
         </Hidden>
-        <main className={classes.content} style={{backgroundColor:"#ececf1"}}>
+        <main className={classes.content} style={{backgroundColor:"#efeff1"}}>
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path="/" render={(props) => <Dashboard {...props} navhandler={this.handleAppBar} />}/>

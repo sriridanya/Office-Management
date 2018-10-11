@@ -46,6 +46,7 @@ class Line extends React.Component {
              
     return (
       <div >
+        <h4> Yearly Progress of Projects</h4>
          <ChartistGraph
                   className="ct-chart"
                   data={lineChartData}

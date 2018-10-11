@@ -8,9 +8,13 @@ class Recruitment extends Component{
       }
     render(){
         return(
-            <div>
-           <AddCandidate/>
+            <div style={{display:"flex",flexDirection:"column"}}>
+                <div className=" adding" style={{float:"right"}}>
+                <AddCandidate/>
+                </div>
+           <div style={{marginTop:"20px"}}>
            <RecruitmentList/>
+           </div> 
             </div>
         );
     }

@@ -112,7 +112,7 @@ class Pie extends React.Component {
 
     return (
       <div >
-        <h4>Progress Of Ongoing Projects</h4>
+        <h4 style={{color:'white'}}>Progress Of Ongoing Projects</h4>
         <div  style={{float:'left',padding:10}}>
         <ChartistGraph
                   className="ct-chart"
@@ -122,7 +122,7 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5>Project 13</h5>
+                <h5 style={{color:'white'}}>Project 13</h5>
         </div>
         <div  style={{float:'left',padding:10}}>
         <ChartistGraph
@@ -133,7 +133,7 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5>Project 14</h5>
+                <h5 style={{color:'white'}}>Project 14</h5>
         </div>
         <div  style={{float:'left',padding:10}}>
         <ChartistGraph
@@ -144,7 +144,7 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5>Project 14</h5>
+                <h5 style={{color:'white'}}>Project 14</h5>
         </div>
       </div>
     )

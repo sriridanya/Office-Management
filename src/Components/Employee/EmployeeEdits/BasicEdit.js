@@ -14,6 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import * as firebase from 'firebase';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -29,16 +30,17 @@ const styles = theme => ({
   },
 
 });
+// const db = firebase.firestore();
 
 class BasicEdit extends Component {
   constructor(props) {
     super(props)
     this.state = {
 
-      name: empdata[this.props.Id - 1].emp_name,
-      email: empdata[this.props.Id - 1].email,
-      mobile: empdata[this.props.Id - 1].mobile,
-      id: empdata[this.props.Id - 1].key,
+      name: this.props.Id.emp_name,
+      email: this.props.Id.email,
+      mobile: this.props.Id.mobile,
+      id: this.props.Id.key,
       submmited: false
     };
     this.handleChange = this.handleChange.bind(this);
@@ -51,11 +53,34 @@ class BasicEdit extends Component {
     });
   };
   handleSubmit() {
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false }), 5000);
+    console.log(this.props.Id.uid);
+    var db = firebase.firestore();
+    var basicRef = db.collection('employeelist').doc(this.props.Id.uid);
+    var updateMany = basicRef.update({
+      emp_name: this.state.name,
+      email: this.state.email,
+      mobile: this.state.mobile
     });
-  }
+    // [END update_document_many]
+  
+    return updateMany.then(res => {
+      console.log('Update: ', res);
+      this.setState({ submitted: true }, () => {
+        setTimeout(() => this.setState({ submitted: false }), 5000);
+      });
+    })
 
+   
+  }
+componentDidMount(){
+
+
+  // Set the 'capital' field of the city
+ 
+
+ 
+  
+}
   render() {
     const { fullScreen } = this.props;
     const { classes } = this.props;
@@ -95,8 +120,9 @@ class BasicEdit extends Component {
 
                 name="employee-email"
                 label="Email"
-                onChange={this.handleChange('email')}
                 value={this.state.email}
+                onChange={this.handleChange('email')}
+           
                 validators={['required', 'isEmail']}
                 errorMessages={['this field is required', 'email is not valid']}
                 className={classes.textField}
@@ -106,8 +132,9 @@ class BasicEdit extends Component {
 
                 name="mobile"
                 label="Mobile"
-                onChange={this.handleChange('mobile')}
                 value={this.state.mobile}
+                onChange={this.handleChange('mobile')}
+              
                 validators={['matchRegexp:^[0-9]{10}$']}
                 errorMessages={['Enter valid no']}
                 className={classes.textField}

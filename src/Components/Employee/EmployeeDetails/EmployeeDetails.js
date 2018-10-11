@@ -17,6 +17,7 @@ import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import ProjectEdit from '../EmployeeEdits/ProjectEdit';
 import DocumentEdit from '../EmployeeEdits/DocumentEdit';
 import AddressEdit from '../EmployeeEdits/AddressEdit';
+import * as firbase from "firebase"
 const styles = theme => ({
   root: {
     overflow: 'hidden',
@@ -53,6 +54,8 @@ class EmployeeDetails extends Component {
       projectEdit: false,
       documentEdit: false,
       addressEdit: false,
+      employeedetail:{},
+      empdoc:[],
       id: '',
       prjdetails: {
         prjname: '',
@@ -87,12 +90,12 @@ class EmployeeDetails extends Component {
     });
 
   }
-  handleBasicEdit(Id) {
+  handleBasicEdit() {
     console.log("basic edit function")
     console.log(this.state.basicEdit)
     this.setState({
       basicEdit: true,
-      id: Id
+   
     })
     // setInterval(this.handleBasicEditcolse,1000)
     // console.log(this.state.basicEdit)
@@ -143,12 +146,12 @@ class EmployeeDetails extends Component {
     })
 
   }
-  handleAddressEdit(Id) {
+  handleAddressEdit() {
     console.log("basic edit function")
     console.log(this.state.addressEdit)
     this.setState({
       addressEdit: true,
-      id: Id
+     
     })
   }
   handleAddressEditcolse() {
@@ -160,12 +163,53 @@ class EmployeeDetails extends Component {
     })
 
   }
-  componentDidMount() {
-    this.props.navhandler(employeedata[this.props.match.params.id - 1].emp_name)
+  componentDidMount(){
+    this.props.navhandler('Employee Information')
   }
+  componentWillMount() {
+  
+      var _this=this;
+      var empList={};
+      var docList=[];
+      console.log("running")
+      var db=firbase.firestore()
+      var empRef = db.collection('employeelist').doc(this.props.match.params.id);
+      empRef.get()
+          .then(doc => {
+            if (!doc.exists) {
+              console.log('No such document!');
+            } 
+            else {
+              console.log('Document data:', doc.data());
+              empList=doc.data();
+              _this.setState({employeedetail:empList})
+              console.log("new data",_this.state.employeedetail)
+            
+            }
+            console.log("test data",empList)
+            
+          })
+          .catch(err => {
+            console.log('Error getting document', err);
+          });
+      
+       var docRef=empRef.collection('Documents')
+          // console.log("new data",_this.state.employeedetail)
+          docRef.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                docList.push(doc.data())
+                _this.setState({empdoc:docList})
+            });
+           
+        });
+    
+  }
+        
   render() {
     const { classes } = this.props;
-    const Id = this.props.match.params.id;
+    // const Id = this.props.match.params.id;
 
     return (
 
@@ -175,7 +219,7 @@ class EmployeeDetails extends Component {
             <Grid container alignItems="center" wrap="nowrap" spacing={16}>
               <Grid item>
                 <ButtonBase className={classes.image}>
-                  <img className={classes.img} alt="complex" src={employeedata[Id - 1].img} />
+                  <img className={classes.img} alt="complex" src={this.state.employeedetail.img} />
                 </ButtonBase>
               </Grid>
               <Grid item xs={12} sm container>
@@ -185,27 +229,27 @@ class EmployeeDetails extends Component {
                       Basic Information
               </Typography>
                     <Grid item xs  >
-                      <Typography align='left' style={{ padding: 2 }} variant="title">{employeedata[Id - 1].emp_name}</Typography>
-                      <Typography align='left' style={{ padding: 2 }} variant="subheading" >{employeedata[Id - 1].email}</Typography>
-                      <Typography align='left' style={{ padding: 2 }} variant="subheading">{employeedata[Id - 1].mobile}</Typography>
+                      <Typography align='left' style={{ padding: 2 }} variant="title">{this.state.employeedetail.emp_name}</Typography>
+                      <Typography align='left' style={{ padding: 2 }} variant="subheading" >{this.state.employeedetail.email}</Typography>
+                      <Typography align='left' style={{ padding: 2 }} variant="subheading">{this.state.employeedetail.mobile}</Typography>
                     </Grid>
                   </Grid>
 
                 </Grid>
                 <Grid item>
-                  <EditIcon variant='fab' onClick={() => this.handleBasicEdit(Id)} />
+                  <EditIcon variant='fab' onClick={() => this.handleBasicEdit()} />
                 </Grid>
 
               </Grid>
 
             </Grid>
             {this.state.basicEdit ?
-              <BasicEdit Id={this.state.id} open={this.state.basicEdit} handleClose={this.handleBasicEditcolse} /> :
+              <BasicEdit Id={this.state.employeedetail} open={this.state.basicEdit} handleClose={this.handleBasicEditcolse} /> :
               null
             }
 
           </Paper>
-          <Paper className={classes.paper}>
+          {/* <Paper className={classes.paper}>
             <Typography gutterBottom variant="headline" align="left"> Project Works
            <AddIcon onClick={this.handleProjectEdit} style={{ float: "right" }} /></Typography>
 
@@ -228,11 +272,11 @@ class EmployeeDetails extends Component {
             }
 
 
-          </Paper>
+          </Paper> */}
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="headline" align="left"> Documents
            <AddPhotoIcon onClick={this.handleDocumentEdit} style={{ float: "right" }} /></Typography>
-            <EmployeeDocument empdoc={employeedata[Id - 1].document} />
+            <EmployeeDocument empdoc={this.state.empdoc} />
 
 
             {this.state.documentEdit ?
@@ -244,17 +288,17 @@ class EmployeeDetails extends Component {
           </Paper>
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="headline" align="left"> Address
-           <EditIcon onClick={() => this.handleAddressEdit(Id)} style={{ float: "right" }} /></Typography>
+           <EditIcon onClick={() => this.handleAddressEdit(this.props.match.params.id)} style={{ float: "right" }} /></Typography>
 
 
             <Grid item xs  >
-              <Typography align='left' style={{ padding: 2 }} variant="subheading">{employeedata[Id - 1].address.street_address}</Typography>
-              <Typography align='left' style={{ padding: 2 }} variant="subheading" >{employeedata[Id - 1].address.city}</Typography>
+              <Typography align='left' style={{ padding: 2 }} variant="subheading">{this.state.employeedetail.address}</Typography>
+              {/* <Typography align='left' style={{ padding: 2 }} variant="subheading" >{employeedata[Id - 1].address.city}</Typography>
               <Typography align='left' style={{ padding: 2 }} variant="subheading">{employeedata[Id - 1].address.state
-              }</Typography>
+              }</Typography> */}
             </Grid>
             {this.state.addressEdit ?
-              <AddressEdit Id={this.state.id} open={this.state.addressEdit} handleClose={this.handleAddressEditcolse} /> :
+              <AddressEdit Id={this.state.employeedetail} open={this.state.addressEdit} handleClose={this.handleAddressEditcolse} /> :
               null
             }
 

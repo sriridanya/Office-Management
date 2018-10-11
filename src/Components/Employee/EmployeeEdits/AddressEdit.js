@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-
+import * as firebase from 'firebase';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -41,9 +41,9 @@ class AddressEdit extends Component {
     super(props)
     this.state = {
 
-      street: empdata[this.props.Id - 1].address.street_address,
-      city: empdata[this.props.Id - 1].address.city,
-      state: empdata[this.props.Id - 1].address.state,
+      
+      city: this.props.Id.address,
+      
       submitted: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,9 +56,20 @@ class AddressEdit extends Component {
     });
   };
   handleSubmit() {
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false }), 5000);
+    var db = firebase.firestore();
+    var addrRef = db.collection('employeelist').doc(this.props.Id.uid);
+    var updateMany = addrRef.update({
+      address: this.state.city,
+      
     });
+    // [END update_document_many]
+  
+    return updateMany.then(res => {
+      console.log('Update: ', res);
+      this.setState({ submitted: true }, () => {
+        setTimeout(() => this.setState({ submitted: false }), 5000);
+      });
+    })
   }
 
   render() {
@@ -105,8 +116,9 @@ class AddressEdit extends Component {
                 id="addr_city"
                 label="City"
                 name="city"
-                onChange={this.handleChange('city')}
                 value={this.state.city}
+                onChange={this.handleChange('city')}
+            
                 validators={['required']}
                 className={classes.smalltextField}
                 errorMessages={['this field is required']}
@@ -118,9 +130,10 @@ class AddressEdit extends Component {
                 id="addr_state"
                 label="State"
                 name="state"
+                value={this.state.state}
                 onChange={this.handleChange('state')}
                 validators={['required']}
-                value={this.state.state}
+               
                 className={classes.smalltextField}
                 errorMessages={['this field is required']}
                 margin="normal"

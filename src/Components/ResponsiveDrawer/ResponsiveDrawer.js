@@ -15,9 +15,15 @@ import { mailFolderListItems, otherMailFolderListItems } from './drawerdata';
 import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import EmployeeDetails from '../Employee/EmployeeDetails/EmployeeDetails';
-import Project from '../Project/Project'
+import Project from '../Project/Project';
+import Recruitment from '../Recruitment/Recruitment'
+// 
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 const drawerWidth = 240;
-
+// const log= this.props.onLogout
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -60,9 +66,11 @@ class ResponsiveDrawer extends React.Component {
     super(props)
     this.state = {
       mobileOpen: false,
-      navtitile: "Office Management "
+      navtitile: "Office Management ",
+      
     };
     this.handleAppBar = this.handleAppBar.bind(this)
+  
   }
 
   handleDrawerToggle = () => {
@@ -71,6 +79,7 @@ class ResponsiveDrawer extends React.Component {
   handleAppBar = (title) => {
     this.setState({ navtitile: title })
   }
+
   render() {
     const { classes, theme } = this.props;
 
@@ -80,7 +89,18 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>{mailFolderListItems}</List>
         <Divider />
-        <List>{otherMailFolderListItems}</List>
+        <List >{otherMailFolderListItems}</List>
+        <Divider/>
+        <List>
+        <ListItem button onClick={this.props.onLogout}  >
+      <ListItemIcon>
+        <LogoutIcon />
+      </ListItemIcon>
+   
+      <ListItemText  primary="Logout" />
+     
+    </ListItem>
+    </List>
       </div>
     );
 
@@ -130,11 +150,13 @@ class ResponsiveDrawer extends React.Component {
         </Hidden>
         <main className={classes.content} style={{backgroundColor:"#efeff1"}}>
           <div className={classes.toolbar} />
+          
           <Switch>
             <Route exact path="/" render={(props) => <Dashboard {...props} navhandler={this.handleAppBar} />}/>
             <Route exact path="/employee" render={(props) => <Employee {...props} navhandler={this.handleAppBar} />} />
             <Route exact path="/employeedetail/:id" render={(props) => <EmployeeDetails {...props} navhandler={this.handleAppBar} />} />
-            <Route exact path="/Project" render={(props)=><Project {...props} navhandler={this.handleAppBar}/>}/>
+            <Route exact path="/project" render={(props)=><Project {...props} navhandler={this.handleAppBar}/>}/>
+          <Route exact path='/recruitment' render= {(props)=><Recruitment {...props} navhandler={this.handleAppBar}/>}/>
           </Switch>
 
         </main>

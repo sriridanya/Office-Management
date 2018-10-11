@@ -5,18 +5,24 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import EmployeeIcon from '@material-ui/icons/SupervisorAccount';
 import ProjectIcon from '@material-ui/icons/BusinessCenter';
-import PayrollIcon from '@material-ui/icons/AccountBalanceWallet';
+// import PayrollIcon from '@material-ui/icons/AccountBalanceWallet';
 import ForumIcon from '@material-ui/icons/Forum';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LogoutIcon from '@material-ui/icons/ExitToApp';
+import RecruitmentIcon from '@material-ui/icons/AssignmentInd';
 import { NavLink } from 'react-router-dom'
+
+
 export const mailFolderListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>
-      <NavLink exact to='/'><ListItemText primary="Dashboard" /></NavLink>
+      <NavLink to={
+        {
+          pathname: '/'
+        }
+      }  ><ListItemText primary="Dashboard" /></NavLink>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -40,9 +46,13 @@ export const mailFolderListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <PayrollIcon />
-      </ListItemIcon>
-      <ListItemText primary="Payroll" />
+        <RecruitmentIcon />
+      </ListItemIcon><NavLink to={
+        {
+          pathname: '/recruitment'
+        }
+      }  >
+      <ListItemText primary="Recruitment" /></NavLink>
     </ListItem>
   </div>
 );
@@ -61,11 +71,6 @@ export const otherMailFolderListItems = (
       </ListItemIcon>
       <ListItemText primary="Settings" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LogoutIcon />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
-    </ListItem>
+   
   </div>
 );

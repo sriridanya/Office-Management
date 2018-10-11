@@ -14,8 +14,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import projectdata from './ProjectData'
-import ProjectDescription from './ProjectDescription'
+import recruitmentdata from './RecruitmentData'
+import RecruitmentInfo from './RecruitmentInfo'
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
@@ -109,20 +109,21 @@ const styles = theme => ({
     overflowX: 'auto',
   },
 });
-console.log(projectdata.length);
+console.log(recruitmentdata.length);
 class CustomPaginationActionsTable extends React.Component {
 constructor(props) {
     super(props)
     this.state = {
-        rows:projectdata.length,
-        showprj:false,
+        rows:recruitmentdata.length,
+        showRec:false,
         scroll:'paper',
-        prjId:'',
+ 
+        recId:'',
           page: 0,
           rowsPerPage: 10,
         };
-        this.onPrjClick = this.onPrjClick.bind(this);
-        this.onPrjClose =this.onPrjClose.bind(this);
+        this.onRecClick = this.onRecClick.bind(this);
+        this.onRecClose =this.onRecClose.bind(this);
 }
 
 
@@ -135,23 +136,24 @@ constructor(props) {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  onPrjClick(Id) {
+  onRecClick(Id) {
   
 
     this.setState({
-      showprj:true,
-      prjId: Id.prj_id
+      showRec:true,
+      recId: Id.recruitment_id,
+      scroll:'paper'
     });
-    console.log(this.state.prjId)
+    console.log(this.state.recId)
 }
-onPrjClose(Id) {
+onRecClose(Id) {
   
 
     this.setState({
-      showprj:false,
+      showRec:false,
      
     });
-    console.log(this.state.prjId)
+    console.log(this.state.recId)
 }
 
   render() {
@@ -165,27 +167,28 @@ onPrjClose(Id) {
           <Table className={classes.table}>
           <TableHead>
           <TableRow>
-          <TableCell >Project Id</TableCell>
-            <TableCell>Project Name</TableCell>
-            <TableCell  >Project Manager</TableCell>
-            <TableCell >Start Date</TableCell>
+          <TableCell >Recruitment Id</TableCell>
+            <TableCell>Candidate Name</TableCell>
+            <TableCell  >Applied Post</TableCell>
+            <TableCell >Email Id</TableCell>
+            <TableCell >Experience</TableCell>
             <TableCell >Status</TableCell>
-            <TableCell >Technology</TableCell>
+        
             
           </TableRow>
         </TableHead>
             <TableBody>
-              {projectdata.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(prj => {
+              {recruitmentdata.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(rec => {
                 return (
-                  <TableRow key={prj.prj_id} onClick={() => { this.onPrjClick(prj) }}>
-                    <TableCell onClick={() => { this.onPrjClick(prj) }}>
-                      {prj.prj_id}
+                  <TableRow key={rec.recruitment_id} onClick={() => { this.onRecClick(rec) }}>
+                    <TableCell onClick={() => { this.onRecClick(rec) }}>
+                      {rec.recruitment_id}
                     </TableCell>
-                    <TableCell component="th" scope="row" >{prj.prj_name}</TableCell>
-                    <TableCell >{prj.prj_manager}</TableCell>
-                    <TableCell >{prj.start_date}</TableCell>
-                    <TableCell >{prj.status}</TableCell>
-                    <TableCell >{prj.technology}</TableCell>
+                    <TableCell component="th" scope="row" >{rec.candidate_name}</TableCell>
+                    <TableCell >{rec.post_applied}</TableCell>
+                    <TableCell >{rec.email}</TableCell>
+                    <TableCell >{rec.experience}</TableCell>
+                    <TableCell >{rec.status}</TableCell>
                   </TableRow>
                 );
               })}
@@ -199,7 +202,7 @@ onPrjClose(Id) {
               <TableRow>
                 <TablePagination
                   colSpan={3}
-                  count={projectdata.length}
+                  count={recruitmentdata.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onChangePage={this.handleChangePage}
@@ -210,7 +213,7 @@ onPrjClose(Id) {
             </TableFooter>
           </Table>
         </div>
-        {this.state.showprj ? <ProjectDescription id={this.state.prjId} open= {this.state.showprj} scroll={this.state.scroll} handleClose={this.onPrjClose}/>:null}
+        {this.state.showRec ? <RecruitmentInfo id={this.state.recId} open= {this.state.showRec}scroll={this.state.scroll} handleClose={this.onRecClose}/>:null}
       </Paper>
     );
   }

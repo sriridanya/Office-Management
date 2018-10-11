@@ -8,10 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import Description from './Description.js';
-import projectdata from './ProjectData';
+import CandidateInfo from './CandidateInfo.js';
+import recruitmentdata from './RecruitmentData';
 
-class ProjectDescription extends React.Component {
+class RecruitmentInfo extends React.Component {
+    
 
   render() {
     const { fullScreen } = this.props;
@@ -23,14 +24,13 @@ class ProjectDescription extends React.Component {
           fullScreen={fullScreen}
           open={this.props.open}
           onClose={this.props.handleClose}
-          scroll={this.props.scroll}
           aria-labelledby="responsive-dialog-title"
-        
+          scroll={this.props.scroll}
         >
-          <DialogTitle  id="responsive-dialog-title">{projectdata[this.props.id-1].prj_name}</DialogTitle>
-          <DialogContent>
+          <DialogTitle  id="responsive-dialog-title">{recruitmentdata[this.props.id-1].candidate_name}</DialogTitle>
+          <DialogContent style={{overflow:'scroll'}}>
           
-        <Description id={this.props.id}/>
+        <CandidateInfo id={this.props.id}/>
             
           </DialogContent>
           <DialogActions>
@@ -45,10 +45,10 @@ class ProjectDescription extends React.Component {
   }
 }
 
-ProjectDescription.propTypes = {
+RecruitmentInfo.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
 };
 
-export default withMobileDialog()(ProjectDescription);
+export default withMobileDialog()(RecruitmentInfo);
 
 

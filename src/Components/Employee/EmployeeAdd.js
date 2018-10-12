@@ -58,7 +58,7 @@ class EmployeeAdd extends Component {
       uploadedFileSrc: '',
       submitted: false,
       
-      submmited: false,
+      imgurl:'',
     
     };
     this.handleChange = this.handleChange.bind(this);
@@ -72,32 +72,99 @@ class EmployeeAdd extends Component {
     });
   };
   handleSubmit() {
+    
     if (this.state.uploadedFile === '') {
         alert("Upload a img to save")
       }
       else {
+       
         var db = firebase.firestore();
+       
         var addDoc = db.collection('employeelist').doc();
+
+
       var empnew=  addDoc.set({
             emp_name: this.state.emp_name,
             email: this.state.email,
             mobile:this.state.mobile,
             address:this.state.address,
-            img:'https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg',
+           
             uid:addDoc.id
           });
         console.log(empnew);
+        var img=this.state.img;
+        var storage = firebase.app().storage("gs://office-management-e5ec6.appspot.com");
+    var storageRef = storage.ref();
+    
+    var spaceRef = storageRef.child(addDoc.id+'/'+this.state.uploadedFileSrc);
+    var uploadTask=spaceRef.put(img)
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+  function(snapshot) {
+    
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+      case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+        default:
+        console.log('default')
+        break;
+    }
+  }, function(error) {
+
+  // A full list of error codes is available at
+  // https://firebase.google.com/docs/storage/web/handle-errors
+  switch (error.code) {
+    case 'storage/unauthorized':
+      console.log(' User doesn\'t have permission to access the object')
+      break;
+
+    case 'storage/canceled':
+    console.log(' User canceled the upload')
+      break;
+
+   
+
+    case 'storage/unknown':
+    console.log('Unknown error occurred, inspect error.serverResponse')
+      break;
+      default:
+      console.log('default')
+      break;
+  }
+}, function() {
+  // Upload completed successfully, now we can get the download URL
+  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+
+    var imgurl=downloadURL;
+    console.log('imhurl working',imgurl);
+    var basicRef = db.collection('employeelist').doc(addDoc.id);
+    var updateMany = basicRef.update({
+
+      img:imgurl,
+    });
+    console.log('img upload success',updateMany);
+    console.log('File available at', downloadURL);
+  });
+});
     this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false, emp_name: '', email: '', mobile: '', address: '', experience: '',img:''}), 5000);
+      setTimeout(() => this.setState({ submitted: false, emp_name: '', email: '', mobile: '',uploadedFileSrc:'', address: '', experience: '',img:''}), 5000);
     });
 }
   }
   onDrop(acceptedFiles, rejectedFiles) {
-    console.log('Accepted files: ', acceptedFiles[0].name);
-    var img=this.state.img;
-    img.push(acceptedFiles);
+    console.log('Accepted files: ', acceptedFiles[0]);
+    var img=acceptedFiles[0];
+  this.setState({img:img})
+  console.log('state file:',this.state.img);
     this.setState({img,uploadedFileSrc:acceptedFiles[0].name}); 
 }
+
   render() {
     const { fullScreen } = this.props;
     const { classes } = this.props;

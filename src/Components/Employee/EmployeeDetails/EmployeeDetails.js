@@ -18,6 +18,7 @@ import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import DocumentEdit from '../EmployeeEdits/DocumentEdit';
 import AddressEdit from '../EmployeeEdits/AddressEdit';
 import * as firbase from "firebase"
+
 const styles = theme => ({
   root: {
     overflow: 'hidden',

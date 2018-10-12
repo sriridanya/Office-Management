@@ -13,5 +13,6 @@ var config = {
     messagingSenderId: "413843782944"
   };
   firebase.initializeApp(config);
+  
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

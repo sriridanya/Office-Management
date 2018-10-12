@@ -13,13 +13,13 @@ class Dashboard extends Component{
       }
     render(){
         return(
-            <div style={{height:"100vh"}}>
+            <div style={{height:"100%"}}>
             <DashboardCardCount/><br/>
             <Card style={{backgroundColor:'#fff'}}>
             <Line/>
             </Card>
             <br/>
-            <Card style={{backgroundColor:'#09210f'}}>
+            <Card style={{backgroundColor:'#fff'}}>
             <Pie/>
             </Card>
             </div>

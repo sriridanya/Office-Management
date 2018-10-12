@@ -112,8 +112,9 @@ class Pie extends React.Component {
 
     return (
       <div >
-        <h4 style={{color:'white'}}>Progress Of Ongoing Projects</h4>
-        <div  style={{float:'left',padding:10}}>
+        <br/>
+        <h4 style={{color:'black'}}>Progress Of Ongoing Projects</h4>
+        <div  style={{float:'left',padding:16}}>
         <ChartistGraph
                   className="ct-chart"
                   data={pieChartData1}
@@ -122,9 +123,10 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5 style={{color:'white'}}>Project 13</h5>
+                <br/>
+                <h5 style={{color:'black'}}>Project 13</h5>
         </div>
-        <div  style={{float:'left',padding:10}}>
+        <div  style={{float:'left',padding:16}}>
         <ChartistGraph
                   className="ct-chart"
                   data={pieChartData2}
@@ -133,9 +135,10 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5 style={{color:'white'}}>Project 14</h5>
+                <br/>
+                <h5 style={{color:'black'}}>Project 14</h5>
         </div>
-        <div  style={{float:'left',padding:10}}>
+        <div  style={{float:'left',padding:16}}>
         <ChartistGraph
                   className="ct-chart"
                   data={pieChartData3}
@@ -144,7 +147,9 @@ class Pie extends React.Component {
                  listener={animation}
              style={style}
                 />
-                <h5 style={{color:'white'}}>Project 14</h5>
+                <br/>
+                
+                <h5 style={{color:'black'}}>Project 14</h5>
         </div>
       </div>
     )

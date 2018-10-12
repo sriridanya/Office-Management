@@ -149,7 +149,7 @@ class EmployeeAdd extends Component {
                    <br />
                         <TextValidator
 
-                            name="mobile"
+                            
                             label="Mobile"
                             onChange={this.handleChange('mobile')}
                             name="mobile"

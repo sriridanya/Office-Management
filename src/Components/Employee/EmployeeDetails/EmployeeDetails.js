@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import employeedata from "../employeedata";
+// import employeedata from "../employeedata";
 // import empdata from '../employeedata'
 // import {Link}from "react-router-dom"; 
 import BasicEdit from '../EmployeeEdits/BasicEdit'
@@ -12,9 +12,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import EditIcon from '@material-ui/icons/Create';
 import EmployeeProject from './EmployeeProject';
 import EmployeeDocument from './EmployeeDocument';
-import AddIcon from '@material-ui/icons/AddCircle';
+// import AddIcon from '@material-ui/icons/AddCircle';
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
-import ProjectEdit from '../EmployeeEdits/ProjectEdit';
+// import ProjectEdit from '../EmployeeEdits/ProjectEdit';
 import DocumentEdit from '../EmployeeEdits/DocumentEdit';
 import AddressEdit from '../EmployeeEdits/AddressEdit';
 import * as firbase from "firebase"

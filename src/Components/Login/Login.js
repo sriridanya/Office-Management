@@ -76,11 +76,12 @@ this.handleSignin = this.handleSignin.bind(this);
         this.setState({errormsg:'Invalid user name or password',email:'',password:''},() => {
           setTimeout(() => this.setState({ errormsg:'' }), 4000);})
         }
-        
-        if (this.state.error === 'auth/invalid-email') {
-          this.setState({errormsg:'Invalid email id',email:'',password:''},() => {
+        if (this.state.error === 'auth/wrong-password') {
+          this.setState({errormsg:'Invalid password try again',email:'',password:''},() => {
             setTimeout(() => this.setState({ errormsg:'' }), 4000);})
           }
+     
+        
         console.log(this.state.errormsg);
       console.log(this.state.error);
       console.log(errorMessage);

@@ -17,11 +17,13 @@ import Dashboard from '../Dashboard/Dashboard';
 import EmployeeDetails from '../Employee/EmployeeDetails/EmployeeDetails';
 import Project from '../Project/Project';
 import Recruitment from '../Recruitment/Recruitment'
+import logo from '../../ZyudlyLabs.png'
 // 
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
 const drawerWidth = 240;
 // const log= this.props.onLogout
 const styles = theme => ({
@@ -86,6 +88,8 @@ class ResponsiveDrawer extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
+        <img src={logo} alt="logo" height="100px" width="150px" style={{    paddingBottom: 15,
+    marginLeft:20, marginRight:20}}/>
         <Divider />
         <List>{mailFolderListItems}</List>
         <Divider />
@@ -105,9 +109,10 @@ class ResponsiveDrawer extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <AppBar className={classes.appBar}>
           <Toolbar>
+
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -122,6 +127,7 @@ class ResponsiveDrawer extends React.Component {
           </Toolbar>
         </AppBar>
         <Hidden mdUp>
+
           <Drawer
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -136,6 +142,7 @@ class ResponsiveDrawer extends React.Component {
           >
             {drawer}
           </Drawer>
+
         </Hidden>
         <Hidden smDown implementation="css">
           <Drawer
@@ -149,8 +156,8 @@ class ResponsiveDrawer extends React.Component {
           </Drawer>
         </Hidden>
         <main className={classes.content} style={{backgroundColor:"#efeff1"}}>
+
           <div className={classes.toolbar} />
-          
           <Switch>
             <Route exact path="/" render={(props) => <Dashboard {...props} navhandler={this.handleAppBar} />}/>
             <Route exact path="/employee" render={(props) => <Employee {...props} navhandler={this.handleAppBar} />} />

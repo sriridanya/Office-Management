@@ -187,7 +187,7 @@ className={classes.smalltextField}
                 <div>Try dropping some files here, or click to select files to upload.</div>
         
           </Dropzone>
-          <p style={{color:'green'}}>{'File'+this.state.uploadedFileSrc+'uploaded'} </p>
+          <p style={{color:'green'}}>{this.state.uploadedFileSrc} </p>
 
 <br />
 

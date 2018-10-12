@@ -7,7 +7,7 @@ const recruitmentdata = [
       resume:"Assets/resume.pdf",
       email:"candiate1@gmail.com",
       phone:"8794561230",
-      status:"selected",
+      status:"Selected",
     },
     {
         recruitment_id:2,
@@ -17,7 +17,7 @@ const recruitmentdata = [
         resume:"Assets/resume.pdf",
         email:"candidate2@gmail.com",
         phone:"7896541230",
-        status:"shortlisted",
+        status:"Rejected",
       },
       {
         recruitment_id: 3,

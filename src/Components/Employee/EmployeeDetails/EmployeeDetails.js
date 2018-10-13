@@ -12,9 +12,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import EditIcon from '@material-ui/icons/Create';
 import EmployeeProject from './EmployeeProject';
 import EmployeeDocument from './EmployeeDocument';
-// import AddIcon from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/AddCircle';
 import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
-// import ProjectEdit from '../EmployeeEdits/ProjectEdit';
+import ProjectEdit from '../EmployeeEdits/ProjectEdit';
 import DocumentEdit from '../EmployeeEdits/DocumentEdit';
 import AddressEdit from '../EmployeeEdits/AddressEdit';
 import * as firbase from "firebase"
@@ -56,6 +56,7 @@ class EmployeeDetails extends Component {
       documentEdit: false,
       addressEdit: false,
       employeedetail:{},
+      Id:1,
       empdoc:[],
       id: '',
       prjdetails: {
@@ -250,22 +251,19 @@ class EmployeeDetails extends Component {
             }
 
           </Paper>
-          {/* <Paper className={classes.paper}>
+          <Paper className={classes.paper}>
             <Typography gutterBottom variant="headline" align="left"> Project Works
            <AddIcon onClick={this.handleProjectEdit} style={{ float: "right" }} /></Typography>
 
 
             <Grid item xs={12} sm container>
-              {employeedata[Id - 1].project.map((prj, index) => (
-                <div key={index} className="col-6" style={{ float: "left" }}>
+            
+                <div className="col-6" style={{ float: "left" }}>
 
-                  <Typography align='left' variant='subheading' onClick={() => { this._onButtonClick(prj, index) }}>{prj.project_name}</Typography>
+                  <Typography align='left' variant='subheading' >project list</Typography>
                 </div>
 
-              )
-              )
-              }
-
+        
             </Grid>
             {this.state.projectEdit ?
               <ProjectEdit Id={this.state.id} open={this.state.projectEdit} handleClose={this.handleProjectEditcolse} /> :
@@ -273,18 +271,17 @@ class EmployeeDetails extends Component {
             }
 
 
-          </Paper> */}
+          </Paper>
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="headline" align="left"> Documents
            <AddPhotoIcon onClick={this.handleDocumentEdit} style={{ float: "right" }} /></Typography>
-            <EmployeeDocument empdoc={this.state.empdoc} />
+     <EmployeeDocument empdoc={this.state.empdoc} /> 
 
 
             {this.state.documentEdit ?
-              <DocumentEdit Id={this.state.id} open={this.state.documentEdit} handleClose={this.handleDocumentEditcolse} /> :
+              <DocumentEdit open={this.state.documentEdit} handleClose={this.handleDocumentEditcolse} /> :
               null
             }
-
 
           </Paper>
           <Paper className={classes.paper}>

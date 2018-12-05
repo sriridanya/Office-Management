@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "plucky-agent-219805",
+  "private_key_id": "56773e60444be804e2c98ea772d9e6e3ebd6c97e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCftZ0lNk5tIYZB\nLk5AQP/+XVDEfbFcb+L8iobBtYjPtuKWAij2rUVppwaIih8qIdmhi2zbW6LEyWxU\nGkStw2AGD6RrzgdSf9NKdQeoFzmgx/JpEXH3n5ObwAckhctccbsbZXXSf9KGes2g\ngKiAMrAKq8AIiOblkwNC4xW33u0wqivuEiZM+wU2hiLSZuE1CgdF67ftWEqdm0Yb\nYFlilbT5jjZ/gaTKNPU1eDLekCKIV+qBqaR9VMRgKweA4jLuQPr/ddVUeVxJBPTM\nCo3s7yg2mJG2zEcVnu7UB3WCEWXYAqnmV+i5ivZOZbUzB/2U9zyYtEAFrAL7pKFA\np2LgfjuNAgMBAAECgf98xWX/rG2Y1JgOVB7OE/nqvvxahdgKX1717UNaEnjPzhE3\nIHjgPn38DIEOKtouEEP18PcaaHzBQJthGSSOnBRop8/MaSlPSo3HnaZdq8dZ1NuN\nOhPPYNvw0hTCc8RsdG24+YsS6MmQRmBfBCSgAvmFXKiqAkphEHl7x+0vuPmVCiFK\nmQfqxOx6fasF9FJd2AaiMDIvivt0Ms6T3EjUEiSMIHNZSfO8wXlUMXci64o5su/3\nQNsYT3oZYqCiUI4fu64RYnfJVwt4YLqi9baMpuBpsYA9QHUfDOZG+hisCuJfYady\ndm7rvsGAQJugjPLig+mVkto/5KnaPNsZdV60L+ECgYEAzcnG8kq08/cqqIuG/HIk\nHQNs3acTQ0Hnfa8rAg+EwrYJiZh1y62Y/9tY5DAwjJuKB335jdetBi/akgSRsu1o\nQ8Lj4wJe1lDobspfxLFZRdYYdo5NKnsslN1yJg6EGuMONxuW+O/lisYMT/EJxprC\nIrly/c8+oyQt88FEKfLIrsMCgYEAxq2aJozE/br8kfBRXzsBkpvSRVDYA4W2Ak8x\nrXuSQ2R0CbvcGlu0AgswNfBwo9GeUYYA9OvXpp/ZxNImBI/WaCGbgC6Ca1UCqxuq\nVqkyx2oCxsOxa3xbSOdhodIYGckYQRdnfWB1MZ4ZQZJuHhmdCmJ5BP+2chZPXvxs\n3I+OZ28CgYAzlzhnGc+PshFhu8kVlM/07hzm3LH5lJYibj3MAHP6FIUDl9NAQr8u\ntaDtZB9nwL6z7iMYKk/YUzrqjHaycs5G3p8fFEMOW65JyDaGKygEWA49+qLh2Ytt\nrq6lV9JKo023BxWsRwg26DvB9t3KipXM+s0XUFOVtsZGa9dY5OLm3QKBgQDBPIxX\nvkbC+iE52GFsnDl1XPTw0ianll9mc5w/vZaO0Z9C8GKtiE/WRQeJDuifjPvNEubP\nUKuYtpTaKAMuILBK65UQ4SucNTy5K9lLHJn09pjoteFUR8mJaPK+r1cdjUd318mi\nWjTiI4ExE7jiscraFNjcEdJjuGtOWXmQNFgvJQKBgGSR7OEw96cparqS+lBHEYJ9\n9sL/jWYrim0yXdHKRzCXwOb3LDWBFj+1GYOqU44y1WnHLtw0mErP+emeMbeGOLDp\nhhTEaJsBMhFpGY13b/X/vVoYDvIxwPLnWLN11hdvbryrJs5itareGhDg8AP+jAGT\n5zW+vLd2EgKZEk06ezAR\n-----END PRIVATE KEY-----\n",
+  "client_email": "googledrive@plucky-agent-219805.iam.gserviceaccount.com",
+  "client_id": "106382923975684857678",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/googledrive%40plucky-agent-219805.iam.gserviceaccount.com"
+}

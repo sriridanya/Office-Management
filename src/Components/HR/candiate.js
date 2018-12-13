@@ -48,7 +48,7 @@ const styles =theme=>( {
 class MediaCard extends Component{ 
     constructor(props) {
         super(props);
-        console.log(props.wo)
+      //  console.log(props.wo)
         this.state = {
           ok:false
            
@@ -56,8 +56,8 @@ class MediaCard extends Component{
                     }
                    this.handleClose=this.handleClose.bind(this)
                    this.clear=this.clear.bind(this)
-                  //  this.accept=this.accept.bind(this)
-                  //  this.reject=this.reject.bind(this)
+                    this.accept=this.accept.bind(this)
+                    this.reject=this.reject.bind(this)
                 }
 
                 handleClose(){
@@ -99,95 +99,146 @@ class MediaCard extends Component{
                 }
 
 
-//                 accept(){
-//                 //  alert(this.props.posts1.id)
-//               //  var ii=this.props.posts1.id
-// var description1=this.props.posts1.description
-// var employeeid1=this.props.posts1.employeeid
-// var start1=this.props.posts1.start
-// var end1=this.props.posts1.end
-// var id1=this.props.posts1.id
-// var title1=this.props.posts1.title
-//                   const db = firebase.firestore();
+                accept(){
+               
+                //  alert(this.props.posts1)
+              //  var ii=this.props.posts1.id
+var description1=this.props.posts1.description
+var employeeid1=this.props.posts1.employeeid
+var start1=this.props.posts1.start
+var end1=this.props.posts1.end
+var id1=this.props.posts1.id
+var title1=this.props.posts1.title
+// var startmonthyear=this.props.posts1.startmonthyear;
+// var endmonthyear=this.props.posts1.endmonthyear;
+// var backgroundColor=this.props.posts1.backgroundColor
 
-//                 //  let id = this.afs.createId();
+var month=end1.toString().substring(4, 7)
+var year=end1.toString().substring(10, 15)
+
+
+
+var month1=start1.toString().substring(4, 7)
+var year1=start1.toString().substring(10, 15)
+
+//alert(month+year)
+
+
+                  const db = firebase.firestore();
+
+                //  let id = this.afs.createId();
 
               
-//       alert(id1)
-//       var addDoc = db.collection('hr').doc(id1);
-//       // db.collection("hr").doc(id1).set({
-// var ee=addDoc.set({
-//   allDay:true,
-//     description:description1,
-//     employeeid:employeeid1,
-//     end:end1,
-//     id:id1,
-//     start:start1,
-//     title:title1,
-//     status:'accept'
-// });
+     // alert(id1)
+      var basicRef = db.collection('hr').doc(id1);
+ var updateMany = basicRef.update({
+  allDay:true,
+    description:description1,
+    employeeid:employeeid1,
+    end:end1,
+    id:id1,
+    start:start1,
+    title:title1,
+    status:'accept',
+    startmonthyear:month1+year1,
+    endmonthyear:month+year,
+    style: {
+      backgroundColor: 
+           "#ad4ca4"
+          },
+          notification:''
 
-//                   //  const settings = {/* your settings... */ timestampsInSnapshots: true};
-//                   //  db.settings(settings);
-//                   //  var basicRef = db.collection('hr').doc('qX9RSeK0xovK3Kk9Pmhk');
-//                   //  var updateMany = basicRef.update({
-//                   //   allDay:true,
-//                   //   description:this.props.posts1.description,
-//                   //   employeeid:this.props.posts1.employeeid,
-//                   //   end:this.props.posts1.end,
-//                   //   id:this.props.posts1.id,
-//                   //   start:this.props.posts1.start,
-//                   //   title:this.props.posts1.title,
-//                   //   // status:'accept'
-//                   //  })
-//                   //  return updateMany.then(res => {})
+})
+return updateMany.then(res => {
+  var close=this.state.ok
+  var states={
+    close:close,
+    status:'accept'
+  }
 
-//                 }
+  this.props.update()
 
 
+  this.props.dispatch({
+    type:'EMPLOYEE_STATUS_CLOSE',
+    states });
 
-                // reject(){
-                //   var description1=this.props.posts1.description
-                //   var employeeid1=this.props.posts1.employeeid
-                //   var start1=this.props.posts1.start
-                //   var end1=this.props.posts1.end
-                //   var id1=this.props.posts1.id
-                //   var title1=this.props.posts1.title
-                //                     const db = firebase.firestore();
+} )
+
+                  //  const settings = {/* your settings... */ timestampsInSnapshots: true};
+                  //  db.settings(settings);
+                  //  var basicRef = db.collection('hr').doc('qX9RSeK0xovK3Kk9Pmhk');
+                  //  var updateMany = basicRef.update({
+                  //   allDay:true,
+                  //   description:this.props.posts1.description,
+                  //   employeeid:this.props.posts1.employeeid,
+                  //   end:this.props.posts1.end,
+                  //   id:this.props.posts1.id,
+                  //   start:this.props.posts1.start,
+                  //   title:this.props.posts1.title,
+                  //   // status:'accept'
+                  //  })
+                  //  return updateMany.then(res => {})
+
+                }
+
+
+
+                reject(){
+                  var description1=this.props.posts1.description
+                  var employeeid1=this.props.posts1.employeeid
+                  var start1=this.props.posts1.start
+                  var end1=this.props.posts1.end
+                  var id1=this.props.posts1.id
+                  var title1=this.props.posts1.title
+                  const db = firebase.firestore();
                   
-                //                   //  let id = this.afs.createId();
-                //   db.collection("hr").doc(id1).set({
-                //     allDay:true,
-                //     description:description1,
-                //     employeeid:employeeid1,
-                //     end:end1,
-                //     id:id1,
-                //     start:start1,
-                //     title:title1,
-                //     status:'reject'
-                //    });
+                  //  let id = this.afs.createId();
+             var rej=db.collection("hr").doc(id1).update({
+                    allDay:true,
+                    description:description1,
+                    employeeid:employeeid1,
+                    end:end1,
+                    id:id1,
+                    start:start1,
+                    title:title1,
+                    status:'reject',
+                    notification:''
+                   })
+                   return rej.then(res => {
+                    var close=this.state.ok
+                    var states={
+                      close:close,
+                      status:'reject'
+                    }
+                    this.props.dispatch({
+                      type:'EMPLOYEE_STATUS_CLOSE',
+                      states });
+                  
+                  } )
+                  
 
-                // }
+                }
 
                 render(){
 
                   const { classes } =this.props;
 
-              //    alert(this.props.posts1.status !=="accept")
+               //  alert(this.props.posts1)
 
              
-//  if(this.props.posts1.status !=='accept' && this.props.posts1.status !=='reject' )
-//  {
-//   var statusaccept  = <div><Button   className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#10a321'}}   onClick={this.accept}>
-//          accept
-//        </Button>
-//         <Button  className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#940007'}}  onClick={this.reject}>
-//          reject
-//        </Button>
-//        </div>
-//  }else{
-//    var statusaccept=null
-//  }
+ if(this.props.posts1.status !=='accept' && this.props.posts1.status !=='reject' &&this.props.posts1.status !=='leave add by hr' )
+ {
+  var statusaccept  = <div><Button   className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#10a321'}}   onClick={this.accept}>
+         accept
+       </Button>
+        <Button  className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#940007'}}  onClick={this.reject}>
+         reject
+       </Button>
+       </div>
+ }else{
+   var statusaccept=null
+ }
      
 
 
@@ -227,11 +278,14 @@ class MediaCard extends Component{
 
           leave reason:{this.props.posts1.description}
           </Typography>
+          <Typography component="p">
+          {this.props.posts1.status}
+          </Typography>
         </CardContent>
         </div>
       </CardActionArea>
       <CardActions>
-      {/* {statusaccept} */}
+      {statusaccept}
       <Button className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#940007'}}  onClick={this.clear}>
           clear
         </Button>
@@ -247,7 +301,7 @@ MediaCard.propTypes = {
 
 
 const mapStateToPropss = (state) => {
-   // alert(state.employeeid)
+  // alert(state.employeeid)
    return {
    posts1: state
    }

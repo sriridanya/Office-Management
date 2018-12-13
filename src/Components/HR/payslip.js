@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 // import empdata from '../employeedata'
 // import classNames from 'classnames';
+import ReactDOM from 'react-dom';
+import logo from '../../unnamed.png'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+
+
+
+import classNames from 'classnames';
+
+import SaveIcon from '@material-ui/icons/Save';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Avatar from 'react-avatar';
+
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +30,7 @@ import PropTypes, { array } from 'prop-types';
 import Button from '@material-ui/core/Button';
 import swal from 'sweetalert';
 import {connect} from 'react-redux';
+//import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
 // import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,10 +39,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import * as firebase from 'firebase';
+import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
+//import Table from './table'
 const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    // maxWidth: '100%'
+  },
+
+  dia:{
+width:'100%'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -48,7 +71,110 @@ const styles = theme => ({
   }
 
 });
-// const db = firebase.firestore();
+
+
+
+
+
+
+var value1=0;
+var value2=0;
+var value3=0;
+var leave;
+var identys;
+// let Lopsss=0;
+
+
+function ccyFormat(start,end,startmonthyear,endmonthyear,identy) {
+  // alert(start)
+  identys=identy
+var date1 = new Date(start);
+var date2 = new Date(end)
+
+ var ends=new Date(identy).toLocaleDateString().substring(3, 5)
+ 
+
+
+if(startmonthyear===endmonthyear)
+{
+ 
+var case1=Math.abs(start.substring(8, 10)-end.substring(8, 10))
+value1=value1+case1
+
+return case1
+}else if(endmonthyear!==identy && startmonthyear===identy){
+
+var month= new Date(start.substring(11, 15), ends, 0).getDate();
+var s=Math.abs(start.substring(8, 10)-1)
+//alert(s)
+var case2= Math.abs(month-s)
+//alert(case2)
+value2=value2+case2
+return case2
+  
+}else if(startmonthyear!==identy && endmonthyear===identy){
+var  start=0
+ 
+ var case3= Math.abs(Math.abs(start-end.substring(8, 10))-1)
+
+ value3=value3+case3
+  return case3
+}
+
+}
+
+
+
+
+
+
+
+function add(){
+ 
+ leave=value3+value2+value1
+  return value3+value2+value1
+}
+
+function handle(){
+  leave=0
+   value1=0;
+ value2=0;
+ value3=0;
+}
+
+function LOP(){
+  if(leave>2){
+    return  Math.abs(leave-2)
+  }
+}
+
+function final(amount){
+
+  var year=new Date(identys).toLocaleDateString().substring(6, 10)
+ 
+  var month=new Date(identys).toLocaleDateString().substring(3, 5)
+ 
+   var days= new Date(year, month, 0).getDate();
+  
+   if(leave<=2){
+     return Math.floor(amount).toFixed(2)
+   }else if(leave>2){
+   var sub= Math.abs(leave-2)
+  
+  //  Lop=Lop+sub;
+ 
+   var onedaysalary=amount/days
+ var p=sub*onedaysalary
+
+return Math.floor(amount-p).toFixed(2)
+   }
+   else{
+     alert('hello')
+   }
+
+
+}
+
 
 class BasicEdit extends Component {
   constructor(props) {
@@ -61,6 +187,14 @@ class BasicEdit extends Component {
       img:'',
       mobile:'',
       array:[],
+      open:true,
+      Basic:'',
+      Transport_Allowance:'',
+      Hostel_EXP_Allowance:'',
+      Special_Allowance:'',
+      TDS:'',
+      Professional_Tax_Deduction:'',
+      monthyear:props.monthyear
       // start:'',
       // end: '',
       // monthyear:'',
@@ -71,18 +205,21 @@ class BasicEdit extends Component {
     };
     // // this.handleChange = this.handleChange.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
+   // this.handleClose=this.handleClose.bind(this)
   }
 
-//   handleChange = name => event => {
-//     this.setState({
-//       [name]: event.target.value,
-      
-//     });
-//   };
+//   handleClose(){
+// alert('naa woo')
+//   }
 
+  
+// componentDidMount(){
+//   alert(this.state.array)
+  
+// }
 
   componentWillMount(){
-    alert(this.props.id)
+   // alert(this.props.id)
 
 var cc
     const db = firebase.firestore();
@@ -105,225 +242,247 @@ address:cc.address,
 email:cc.email,
 img:cc.img,
 mobile:cc.mobile,
-  array:this.props.arrays  
+  array:this.props.arrays,
+  Basic:cc.payslip.Basic,
+  Transport_Allowance:cc.payslip.Transport_Allowance,
+  Hostel_EXP_Allowance:cc.payslip.Hostel_EXP_Allowance,
+  Special_Allowance:cc.payslip.Special_Allowance,
+  TDS:cc.payslip.TDS,
+  Professional_Tax_Deduction:cc.payslip.Professional_Tax_Deduction, 
   })
-}, 1000);
+  // this.state.array.map((row,index) => {
+  //  return ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)
+  // })
+}, 2000);
+
+// setTimeout(() => {alert(this.state.array),
+// this.state.array.map((row,index) => {
+//  return ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)
+// })
+// },2500)
   }
 
-//   handleSubmit() {
-
-
-
-
-    
-
-//    // alert(this.state.id)
-//   var  emp_name
-//   //var color
-// var hh=this.props.posts1.zyudlyemployee
-// hh.filter((doc)=>{
-
-// if(doc.employee_id==this.state.id){
-//   emp_name=doc.emp_name
-// }
-
-
-// })
-
-
-// const db = firebase.firestore();
-// // const settings = {/* your settings... */ timestampsInSnapshots: true};
-// //        db.settings(settings);
-// var addDoc = db.collection('hr').doc();
-// var month=this.state.start.toString().substring(3, 7)
-// var year=this.state.start.toString().substring(10, 15)
-
-
-// var empnew=  addDoc.set({
-// title: emp_name,
-// start: this.state.start.toString(),
-// end:this.state.end.toString(),
-// allDay:true,
-// description:this.state.reason,
-// id:addDoc.id,
-// employeeid:this.state.id,
-// monthyear:month+year,
-// style: {
-//   backgroundColor: 
-//        "#ad4ca4"
-      
-// }
-// })
-// return empnew.then(res => {
- 
-//   setTimeout(()=>{
-    
-//     this.setState({
-//     reason:'',
-//      id:''
-//     }),
-//     swal("record added successfully", "", "success"),
-//     this.props.update()
-//   },2000)
-  
-// })
-
-
-// //alert(emp_name)
-//     // console.log(this.props.Id.uid);
-//     // var db = firebase.firestore();
-//     // var basicRef = db.collection('zyudlyemployee').doc(this.props.Id.uid);
-//     // var updateMany = basicRef.update({
-//     //   emp_name: this.state.name,
-//     //   email: this.state.email,
-//     //   mobile: this.state.mobile
-//     // });
-//     // // [END update_document_many]
-  
-//     // return updateMany.then(res => {
-//     //   console.log('Update: ', res);
-    
-//     //   this.setState({ submitted: true }, () => {
-//     //     setTimeout(() => this.setState({ submitted: false })
-//     //     , 5000);
-//     //   });
-//     // })
-
-   
-//   }
-// componentDidMount(){
-
-// //alert(this.props.array)
-//   // Set the 'capital' field of the city
- 
-
- 
-  
-// }
   render() {
+
+    // alert(Lopsss)
+
+
+
+
+    this.state.array.map((row,index) => {
+      return ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)
+     })
+
+    //var dot=<div style={{float:"left"}}><Typography variant="body2" gutterBottom>:</Typography></div>
      // alert(this.state.emp_name)
     const { fullScreen } = this.props;
     const { classes } = this.props;
     const { submitted } = this.state;
+
+    // const lops=Lop
+
+    
+     add()
+   // alert(identys)
+    const noofdays=new Date(this.state.monthyear.substring(0,4), this.state.monthyear.substring(5,7), 0).getDate()
+  //alert(this.state.monthyear.substring(0,4))
+  //alert(this.state.monthyear.substring(5,7))
+    const Salary=parseInt(this.state.Basic)+parseInt(this.state.Transport_Allowance)+parseInt(this.state.Special_Allowance)+parseInt(this.state.TDS)+parseInt(this.state.Professional_Tax_Deduction)
     return (
-      <div>
-        <Dialog
-          fullScreen={fullScreen}
-          open={this.props.open}
-          // onClose={()=>{
-          //   console.log(this.state.open)
-          //   this.setState({open:false})
-          // }}
-          onClose={this.props.handleClose}
 
-          aria-labelledby="responsive-dialog-title"
-          key={this.state.id}
-        >
-          <DialogTitle id="responsive-dialog-title">Leave Apply</DialogTitle>
-          <DialogContent>
-            <ValidatorForm
-              ref="form"
-              onSubmit={this.handleSubmit}
-            >
- <Card className={classes.card}>
+// <DialogTitle >
+//   {identys}////after the dialog tag
+// </DialogTitle>
+// <DialogTitle >
+//   {this.state.emp_name}
+// </DialogTitle>
 
-   
-<CardContent>
-  <div style={{float:'left'}}>
+<Dialog
+open={this.props.open}
+maxWidth='100%'
+//TransitionComponent={Transition}
+keepMounted
+onClose={ (event)=>{ this.props.handleClose(); handle()}}
+//style={{width:'100%'}}
 
-    <Avatar size="123"   round={true} src={this.state.img} />
-
-         <br/>
-         <br/>
-         </div>
-         <div style={{float:"right"}}>
-
-<Typography align='left'style={{lineHeight:'0em'}} variant="subheading">
-           {this.state.emp_name}       
-         </Typography>
-         <br/>
-         <br/>
-         <Typography align='left'style={{lineHeight:'0em'}} variant="subheading">
-            {this.state.address}      
-         </Typography>
-         <br/>
-         <br/>
-
-         <Typography align='left'style={{lineHeight:'0em'}} variant="subheading">
-         {this.state.email}       
-         </Typography>
-         <br/>
-         <br/>
-
-         <Typography align='left'style={{lineHeight:'0em'}} variant="subheading">
-           {this.state.mobile}    
-         </Typography>
-         <br/>
-         <br/>
-         {this.state.array.map((doc)=>{
-
-           return(
-             <div>
-            <Typography align='right'style={{lineHeight:'0em'}} variant="subheading">
-         start:  {doc.start}    
-         </Typography>
-         <br/>
-         <br/>
-         <Typography align='right'style={{lineHeight:'0em'}} variant="subheading">
-          end: {doc.end}    
-         </Typography>
-         <br/>
-         <br/>
-         </div>
-
-           )
-          
-
-         })}
+ aria-labelledby="alert-dialog-slide-title"
+ aria-describedby="alert-dialog-slide-description"
+>
 
 
-         </div>
-</CardContent>
- <CardActions>
- 
+<DialogContent>
+<div>
+                <div className="example-config">
+                <Button variant="contained" size="small" className={classes.button} onClick={this.exportPDFWithComponent}>
+        <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+        Pdf
+      </Button>
+                    {/* <button className="k-button" onClick={this.exportPDFWithComponent}>Export with component</button> */}
+                    {/* &nbsp;
+                    <button className="k-button" onClick={this.exportPDFWithMethod}>Export with method</button> */}
+                </div>
+
+  <PDFExport ref={(component) => this.pdfExportComponent = component} paperSize="A4">
+                   
+               
+<Paper className={classes.root}>
+{/* <Paper className={classes.root}> */}
+
+<div>
+<DialogTitle align='center' variant='h3' >
+<img src={logo} alt="logo" height="100%" width="100%"/>
+ </DialogTitle>
+
   
-</CardActions> 
-</Card>
+
+<DialogTitle align='center' variant='h3' >
+Salary Slip for the month {new Date(this.state.monthyear).toUTCString().substring(7,16)}
+ </DialogTitle>
+
+<div style={{float:"left",marginLeft:'8%'}}>
+
+        <Typography variant="body2" gutterBottom>
+        Employee Name -{this.state.emp_name}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        Designation	-
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        Days in Month-{noofdays}
+        </Typography>
+        </div>
+
+<div style={{float:"right",marginRight:'30%'}}>
+
+        <Typography variant="body2" gutterBottom>
+        Employee No-
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        Date of Joining-
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        LOP	-{LOP()}
+        </Typography>
+        </div>
+
+        {/* </Paper> */}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        </div>
+        
+ <Paper className={classes.root}>
+
+ 
+      <Table className={classes.table}>
+        <TableHead>
 
 
-            </ValidatorForm>
-          </DialogContent>
+          <TableRow>
+            <TableCell style={{textAlign: 'center'}}>S.NO</TableCell>
+            <TableCell numeric style={{textAlign: 'center'}}>Earnings / Deduction</TableCell>
+          
+            <TableCell numeric style={{textAlign: 'center'}}>Amount in Rupees</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* {this.state.array.map((row,index) => {
+            return (
+              <TableRow key={index}>
+                <TableCell>{index+1}</TableCell>
+                <TableCell >{row.start.substring(0, 15)}</TableCell>
+                <TableCell >{row.end.substring(0, 15)}</TableCell>
+                <TableCell >{ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)}</TableCell>
+              </TableRow>
+            );
+          })}  */}
+           <TableRow>
+            <TableCell  />   
+            <TableCell style={{textAlign: 'center'}} >Total Leave</TableCell>
+            <TableCell style={{textAlign: 'center'}} >{add()}</TableCell>
+           </TableRow>
+          <TableRow>
+            <TableCell  />
+            <TableCell  style={{textAlign: 'center'}}>Basic</TableCell>
+           
+            <TableCell style={{textAlign: 'center'}} >{this.state.Basic}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          <TableRow>
+            <TableCell  />
+            <TableCell  style={{textAlign: 'center'}}>HR Allowance</TableCell>
+           
+            <TableCell  style={{textAlign: 'center'}}>{this.state.Transport_Allowance}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          {/* <TableRow>
+            <TableCell  />
+            <TableCell >Hostel EXP Allowance</TableCell>
+            <TableCell>-</TableCell> 
+            <TableCell >{this.state.Hostel_EXP_Allowance}</TableCell>
+          </TableRow> */}
+          <TableRow>
+            <TableCell  />
+            <TableCell style={{textAlign: 'center'}} >Special Allowance</TableCell>
+           
+            <TableCell style={{textAlign: 'center'}}>{this.state.Special_Allowance}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          <TableRow>
+            <TableCell  />
+            <TableCell style={{textAlign: 'center'}}>TDS</TableCell>
+           
+            <TableCell style={{textAlign: 'center'}}>{this.state.TDS}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          <TableRow>
+            <TableCell  />
+            <TableCell style={{textAlign: 'center'}} >Professional Tax Deduction</TableCell>
+          
+            <TableCell style={{textAlign: 'center'}}>{this.state.Professional_Tax_Deduction}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          <TableRow>
+            <TableCell  /> 
+            
+            <TableCell style={{textAlign: 'center'}}>Salary</TableCell>
+            <TableCell style={{textAlign: 'center'}}>{Salary}</TableCell>
+            {/* <TableCell numeric>{"ccyFormat(invoiceSubtotal)"}</TableCell>  */}
+          </TableRow>
+          <TableRow>
+            <TableCell  /> 
+      
+            <TableCell style={{textAlign: 'center'}}>Final Salary</TableCell>
+            <TableCell style={{textAlign: 'center'}}>{final(Salary)}</TableCell>
+            
+          </TableRow>
+          
+        </TableBody>
+      </Table>
+    </Paper>
+    </Paper>
+    </PDFExport>
+            </div>
+</DialogContent>
 
-
-
-        </Dialog>
-      </div>
+</Dialog>
     );
   }
-
+  exportPDFWithMethod = () => {
+    savePDF(ReactDOM.findDOMNode(this.grid), { paperSize: 'A4' });
+}
+exportPDFWithComponent = () => {
+    this.pdfExportComponent.save();
 }
 
-
-// const array=(props)=>{
-//     return alert(this.props)
-// }
+}
 
 
 
 
 const mapStateToPropss = (state) => {
 
-
-// var c=[]
-//     state.zyudlyemployee.map((s)=>{
-//         //alert(s.emp_name)
-//         c.push({
-//            value:s.emp_name ,
-//             label:s.emp_name
-//         })
-//         console.log(c)
-//     })
-    // alert(state.zyudlyemployee)
     return {
     posts1: state,
    
@@ -334,11 +493,15 @@ BasicEdit.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
 };
-//   const comp1 =withMobileDialog()(BasicEdit);
-//   const comp2 =withStyles(styles)(BasicEdit);
+
+
+
+
+
 export default  compose(
     connect(mapStateToPropss),  withStyles(styles),
   withMobileDialog(),
 )(BasicEdit);
 
 
+//https://www.telerik.com/kendo-react-ui/components/pdfprocessing/

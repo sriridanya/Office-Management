@@ -10,7 +10,10 @@ const initialState = {
   email:'',
   status:'',
   description:'',
-  zyudlyemployee:[]
+  zyudlyemployee:[],
+   backgroundColor:'',
+  // startmonthyear:'',
+  // endmonthyear:'',
    
   }
 
@@ -33,8 +36,10 @@ const postReducer = (state = initialState, action) => {
        email:action.candiate.email,
        status:action.candiate.status,
        employeeid:action.candiate.employeeid,
-       description:action.candiate.description
-
+       description:action.candiate.description,
+       endmonthyear:action.candiate.endmonthyear,
+       startmonthyear:action.candiate.startmonthyear,
+       backgroundColor:action.candiate.backgroundColor
        }
     
       case 'ZYUDLY_EMPLOYEE':
@@ -47,6 +52,13 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
        ok:action.close
+      }
+      case 'EMPLOYEE_STATUS_CLOSE':
+      return {
+        ...state,
+       ok:action.states.close,
+       status:action.states.status,
+
       }
       default:
         return state;

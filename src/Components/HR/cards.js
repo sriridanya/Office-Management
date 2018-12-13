@@ -11,6 +11,10 @@ import TextValidator  from 'react-material-ui-form-validator';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Payslip from './payslip'
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+
+import { DatePicker } from 'material-ui-pickers';
 import {connect} from 'react-redux';
 import * as firebase from 'firebase';
 
@@ -30,11 +34,37 @@ const styles = theme=>({
   pos: {
     marginBottom: 12,
   },
+  textField1:{
+    marginLeft:' -42%',
+    //marginRight: theme.spacing.unit,
+    width: 150,
+  },
   textField:{
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  }
+      //marginRight: theme.spacing.unit,
+      width: 150,
+    },
+
+    smalltextField1: {
+      marginLeft: '-23%',
+      marginRight: theme.spacing.unit,
+      width: 200,
+    },
+    smalltextField2: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 200,
+      left: '6%'
+    },
+    smalltextField3: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+     // width: 200,
+      left: '12%',
+      marginTop:'1%',
+    
+
+    }
 });
 
 
@@ -53,7 +83,7 @@ class SimpleCard extends Component {
       };
       this.handleChange = this.handleChange.bind(this);
       this.submit = this.submit.bind(this);
-      this.handleClose=this.handleClose.bind(this);
+      this.handleCandidateEditcolse=this.handleCandidateEditcolse.bind(this);
     //   this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -65,57 +95,86 @@ class SimpleCard extends Component {
       };
 
 
-      handleClose(){
+      handleCandidateEditcolse(){
        
+     //   alert('nass '+this.state.submmited)
         this.setState({
-        payslip:false
+          submmited:false
       })
       }
 
       submit(){
+     //   alert(new Date(this.state.monthyear).toUTCString())
+      
 
-
-   
 var emp=[]
-        //alert(this.state.id)
-       var data= new Date(this.state.monthyear)
-       var month=data.toString().substring(3, 7)
-       var year=data.toString().substring(10, 15)
+//alert(this.state.id)
+var data= new Date(this.state.monthyear)
+var month=data.toString().substring(4, 7)
+var year=data.toString().substring(10, 15)
 
-       var monthyear=month+year
+var monthyear=month+year
 
-       // alert(this.state.id)
+const db = firebase.firestore();
+
+   db.collection("hr").where("employeeid", "==", this.state.id)
+   .get()
+   .then(function(querySnapshot) {
+     console.log(querySnapshot.docs)
+    if(querySnapshot.docs.length===0){
+     alert('no record')
  
-        
-        const db = firebase.firestore();
-        db.collection("hr").where("employeeid", "==", this.state.id).where('monthyear', "==", monthyear)
-        .get()
-        .then(function(querySnapshot) {
-          console.log(querySnapshot.docs)
-         if(querySnapshot.docs.length===0){
-        //  alert('no record')
-         }
-            querySnapshot.forEach(function(doc) { 
-            // alert(doc.data())
-            // console.log(doc.data())
-            emp.push(doc.data())
-           
-            });
-        })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
-        });
+ 
+     
+    }
+       querySnapshot.forEach(function(doc) { 
+      
+
+       if(doc.data().startmonthyear===monthyear|| doc.data().endmonthyear===monthyear){
+     var doccc=  doc.data()
+       emp.push(doccc)
+       var a = emp.indexOf(doccc);
+      // alert(a)
+      // alert(a)
+       emp[a].identy = monthyear;
+       //alert(emp)
+
+       console.log(emp)
+  //     }
+       }else{
+       // emp.push({identy: monthyear})
+       }
+       });
+   })
+ 
+   .catch(function(error) {
+       console.log("Error getting documents: ", error);
+   });
+ 
 
 
 
-               //alert(monthyear)
+
+
+       //alert(monthyear)
 setTimeout(()=>{
-  var _this=this
-  _this.setState({
-  payslip:true,arrays:emp
-})
+
+
+// if(emp.length !==0){
+this.setState({
+submmited:true,
+arrays:emp,
+}),console.log(emp)
+// }
+
+// else{
+//   alert('no data')
+// }
 },3000)
-        
+
+// setTimeout(()=>{
+
+// },4000)   
       }
     
     
@@ -141,15 +200,17 @@ setTimeout(()=>{
 
    
       <CardContent>
+        <div>
       <TextField
        select
           id="standard-uncontrolled"
           label="name"
           defaultValue="foo"
           onChange={this.handleChange('id')}
-          className={classes.textField}
+         className={classes.smalltextField1}
           value={this.state.id}
-          margin="normal">
+       //   margin="normal"
+       >
              {this.props.array.map(option => (
             <MenuItem key={option.value} value={option.value}>
              {option.label}
@@ -157,23 +218,31 @@ setTimeout(()=>{
           ))}
           </TextField>
 
+
+
+
+
+
       <TextField
         id="date"
         label="month"
         type="month"
         onChange={this.handleChange('monthyear')}
-        Value={this.monthyear}
-        className={classes.textField}
+        value={this.monthyear}
+       // margin="normal"
+        className={classes.smalltextField2}
         InputLabelProps={{
           shrink: true,
         }}
-      />
+      /> 
 
-       <Button  className={classes.textField} onClick={this.submit} style={{color:'white',backgroundColor:'#0f0c2b'}} autoFocus>
+      
+
+       <Button  className={classes.smalltextField3} onClick={this.submit} style={{color:'white',backgroundColor:'#0f0c2b'}} autoFocus>
                 submit
                 </Button>
-               
-
+                {this.state.submmited ? <Payslip open={this.state.submmited} handleClose={this.handleCandidateEditcolse} id={this.state.id} arrays={this.state.arrays} monthyear={this.state.monthyear} />: null}
+</div>
       </CardContent>
        <CardActions>
        
@@ -182,7 +251,7 @@ setTimeout(()=>{
     </Card>
 
 
- {this.state.payslip ? <Payslip open={this.state.payslip} id={this.state.id} arrays={this.state.arrays} handleClose={this.handleClose}/>: null}
+       
     </div>
 
   );
@@ -213,3 +282,11 @@ const mapStateToPropss = (state) => {
   }
 
 export default connect(mapStateToPropss)(withStyles(styles)(SimpleCard));
+
+
+
+
+// <MuiPickersUtilsProvider utils={DateFnsUtils}>
+// <DatePicker  value={this.monthyear}   margin="normal" className={classes.smalltextField2} onChange={this.handleChange('monthyear')} />
+
+// </MuiPickersUtilsProvider>

@@ -159,11 +159,13 @@ class MiniDrawer extends React.Component {
         zyudly_empolyee:da.Empolyee,
         progress:false,
         notification:false,
-        status:''
+        status:[]
+        ,length:''
           };
         this.handleAppBar = this.handleAppBar.bind(this)
         this.notification=this.notification.bind(this);
         this.notificationclose=this.notificationclose.bind(this);
+        this.update=this.update.bind(this);
       }
 
       notification(){
@@ -176,6 +178,45 @@ class MiniDrawer extends React.Component {
       notificationclose(){
        // console.log('na aaaaaaaa')
         this.setState({ notification: !this.state.notification });
+      }
+
+
+
+      update(){
+        var _this=this
+        //var empList=[]
+
+   // console.log("running")
+
+   var db=firbase.firestore()
+
+    var c=[];
+    db.collection("hr").where("employeeid", "==", Cookies.get('token'))
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+         
+         if(doc.data().notification===''){
+
+            c.push({
+              'status':doc.data().status,
+              'id':doc.data().id
+            })
+          }           
+             });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    })
+
+    setTimeout(() => {
+      _this.setState({
+        status:c,
+        length:c.length
+      })
+      console.log("here"+_this.state.status) 
+   console.log("here"+_this.state.status.length) 
+    },2000)
       }
 
 
@@ -194,30 +235,39 @@ class MiniDrawer extends React.Component {
 //  const settings = {/* your settings... */ timestampsInSnapshots: true};
 //  db.settings(settings);
 
-//alert( Cookies.get('token'))
+//alert(Cookies.get('token'))
 
 
 
-    // var c;
-    // db.collection("hr").where("employeeid", "==", Cookies.get('token'))
-    // .get()
-    // .then(function(querySnapshot) {
-    //     querySnapshot.forEach(function(doc) {
-    //      // alert(doc.data().status)
-    //         c=doc.data().status
-                    
-    //          });
-    // })
-    // .catch(function(error) {
-    //     console.log("Error getting documents: ", error);
-    // })
+  //   var c=[];
+  //   db.collection("hr").where("employeeid", "==", Cookies.get('token'))
+  //   .get()
+  //   .then(function(querySnapshot) {
+  //       querySnapshot.forEach(function(doc) {
+  //        // alert(doc.data().status)
 
-    // setTimeout(() => {
-    //   _this.setState({
-    //     status:c
-    //   })
-    // // alert("sss"+_this.state.status) 
-    // },2000)
+  //        if(doc.data().notification===''&& doc.data().status !==''){
+
+         
+  //           c.push({
+  //             'status':doc.data().status,
+  //             'id':doc.data().id
+  //           })
+  //         }           
+  //            });
+  //   })
+  //   .catch(function(error) {
+  //       console.log("Error getting documents: ", error);
+  //   })
+
+  //   setTimeout(() => {
+  //     _this.setState({
+  //       status:c,
+  //       length:c.length
+  //     })
+  //     console.log("here"+_this.state.status) 
+  //  console.log("here"+_this.state.status.length) 
+  //   },2000)
     var docRef=db.collection("zyudlyemployee")
 
 
@@ -455,7 +505,7 @@ const drawer=(
           
           </Typography>
           <div className={classes.noti}>
-          <Badge className={classes.margin} onClick={this.notification}    badgeContent={10} color="primary">
+          <Badge className={classes.margin} onClick={this.notification}    badgeContent={this.state.length} color="primary">
           <MailIcon />
         </Badge>
         </div>
@@ -482,7 +532,7 @@ const drawer=(
         <div>
          
         </div>
-        {this.state.notification ? <Notification    {...this.props} handleclose={this.notificationclose}   reasons={this.state.status}/> : null}
+        {this.state.notification ? <Notification    {...this.props} handleclose={this.notificationclose}   reasons={this.state.status} update={this.update}/> : null}
       </div>
     );
   }

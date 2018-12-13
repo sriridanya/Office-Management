@@ -68,16 +68,85 @@
 
 
 
-var c=[{
-  Employee:"dddd"},{
-  Employee:"qq"},{
-  Employee:"ss"},{
-  Employee:"dd"},{
-  Employee:"xx"},{
-  Employee:"cc"}]
+// var c=[{
+//   Employee:"dddd"},{
+//   Employee:"qq"},{
+//   Employee:"ss"},{
+//   Employee:"dd"},{
+//   Employee:"xx"},{
+//   Employee:"cc"}]
 
-c.map((a)=>{
-if(a.Employee==='ss'){
-console.log(a.Employee)
-}
+// c.map((a)=>{
+// if(a.Employee==='ss'){
+// console.log(a.Employee)
+// }
+// // })
+// var x=1
+
+// if ( x >= 0    &&    x < 0.33 )
+// {
+//   console.log(x)
+// // }
+// var febDate  = new Date(2018, 3,2);
+// console.log(febDate) //Month is 0-11 in JavaScript
+// febDate.setDate(-1);
+// console.log(febDate); //displays Tue Mar 2 2010
+//The same roll over behavior occurs in all the other setters and even accounts for leap years:
+
+// var y2k  = new Date(2000, 0, 1);
+// y2k.setMonth(14);
+
+// console.log('14 months after the new millenium is: ' + y2k.toDateString()); //displays Thu Mar 31 2001
+
+// var y2k  = new Date(2000, 0, 1);
+// y2k.setHours(-22);
+// console.log('22 hours before the new millenium is: ' + y2k); //displays Fri Dec 31 1999 02:00:00 GMT-0500 (Eastern Standard Time)
+
+// var date1 = new Date("12/13/2010");
+// var date2 = new Date("12/15/2010");
+// var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+// var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+// console.log(diffDays);
+
+
+
+// function getDaysInMonth(month, year) {
+//      // Since no month has fewer than 28 days
+//      var date = new Date(year, month, 1 );
+//      var days = [];
+//      console.log('month', month, 'date.getMonth()', date.getMonth())
+//      while (date.getMonth() === month) {
+//         days.push(new Date(date));
+//         date.setDate(date.getDate() + 1);
+//      }
+//      return days;
+// }
+    
+// console.log(getDaysInMonth(11, 2018))
+    
+
+// var obj = {
+//     key1: 'value1',
+//     key2: 'value2'
+// }
+
+// // obj.key3 = "value3";
+// //console.log(obj)
+// var array=[]
+// array.push(obj)
+// array.Address = "123 Some St.";
+
+// console.log(array)
+
+
+// function daysInMonth (month, year) {
+//     return new Date(year, month, 0).getDate();
+// }
+
+// // July
+// console.log(daysInMonth(02,2018)) // 31
+// 
+var array=['sss','ssss','sss','ss']
+array.map((doc)=>{
+console.log(doc)
 })

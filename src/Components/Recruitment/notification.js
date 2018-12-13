@@ -9,6 +9,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import * as firebase from 'firebase';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import { Icon } from 'react-icons-kit'
+import {alertCircled} from 'react-icons-kit/ionicons/alertCircled'
 
 
 
@@ -48,9 +52,33 @@ const styles = theme => ({
     open: true,
     reasons:props.reasons
   };
+  this.remove=this.remove.bind(this)
   }
   componentWillMount(){
   
+  }
+
+  remove(e){
+    alert(e)
+    const db = firebase.firestore();
+
+  
+  
+// alert(id1)
+var basicRef = db.collection('hr').doc(e);
+var updateMany = basicRef.update({
+
+notification:'ok'
+
+})
+return updateMany.then(res => {
+ 
+
+  this.props.update()
+
+
+} )
+
   }
 
   handleClickOpen = () => {
@@ -63,6 +91,7 @@ const styles = theme => ({
 
   render() {
   //  alert(this.state.reasons)
+  //console.log(this.state.reasons)
     const { classes, theme } = this.props;
     return (
       <div className={classes.assign}>
@@ -73,21 +102,29 @@ const styles = theme => ({
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-        <div style={{backgroundColor:'red'}}> 
-          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-          </div>
+       
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-             {this.state.reasons}   </DialogContentText>
+            {this.state.reasons.map((doc)=>{
+            return (
+              <div>
+                  <Typography>-------------------------------------------</Typography>
+            <Typography align='center'>{doc.status}
+              <IconButton  aria-label="Delete"  color="secondary"    onClick={()=>{this.remove(doc.id)}} handleClose={this.close}>
+                  <div style={{ color: '#de072b' }}>
+                  <Icon icon={alertCircled}  size={18} />
+                  </div>              
+                  </IconButton> 
+            </Typography>
+           
+              <Typography>-------------------------------------------</Typography>
+            </div>
+            )}
+         
+
+            )}
+            
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
+          
         </Dialog>
       
       

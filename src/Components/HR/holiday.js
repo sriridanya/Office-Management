@@ -18,7 +18,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import * as firebase from 'firebase';
-import notification from '../Recruitment/notification';
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -57,8 +56,10 @@ class BasicEdit extends Component {
       monthyear:'',
       id:'',
       reason:'',
-      array:props.array,
-      submmited: false
+      festival:'',
+     // array:props.array,
+      submmited: false,
+      comments:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -78,29 +79,10 @@ class BasicEdit extends Component {
 
   handleSubmit() {
 
-
-
-
-    
-
-   // alert(this.state.id)
-  var  emp_name
-  //var color
-var hh=this.props.posts1.zyudlyemployee
-hh.filter((doc)=>{
-
-if(doc.employee_id==this.state.id){
-  emp_name=doc.emp_name
-}
-
-
-})
-
-
 const db = firebase.firestore();
 // const settings = {/* your settings... */ timestampsInSnapshots: true};
 //        db.settings(settings);
-var addDoc = db.collection('hr').doc();
+var addDoc = db.collection('holidays').doc();
 
 
 var month=this.state.end.toString().substring(4, 7)
@@ -112,60 +94,36 @@ var month1=this.state.start.toString().substring(4, 7)
 var year1=this.state.start.toString().substring(10, 15)
 
 var empnew=  addDoc.set({
-title: emp_name,
+title: this.state.festival,
 start: this.state.start.toString(),
 end:this.state.end.toString(),
 allDay:true,
-description:this.state.reason,
+comments:this.state.comments,
 id:addDoc.id,
-employeeid:this.state.id,
-endmonthyear:month+year,
-startmonthyear:month1+year1,
+
 style: {
   backgroundColor: 
        "#ad4ca4"
       
-},
-notification:'',
-status:'leave add by hr'
+}
 })
 return empnew.then(res => {
  
   setTimeout(()=>{
     
     this.setState({
-    reason:'',
-     id:''
+        festival:'',
+        comments:''
     }),
-    swal("record added successfully", "", "success"),
-    this.props.update()
+    swal("record added successfully", "", "success")
+   ,this.props.update()
   },2000)
   
 })
 
+}
 
-//alert(emp_name)
-    // console.log(this.props.Id.uid);
-    // var db = firebase.firestore();
-    // var basicRef = db.collection('zyudlyemployee').doc(this.props.Id.uid);
-    // var updateMany = basicRef.update({
-    //   emp_name: this.state.name,
-    //   email: this.state.email,
-    //   mobile: this.state.mobile
-    // });
-    // // [END update_document_many]
-  
-    // return updateMany.then(res => {
-    //   console.log('Update: ', res);
-    
-    //   this.setState({ submitted: true }, () => {
-    //     setTimeout(() => this.setState({ submitted: false })
-    //     , 5000);
-    //   });
-    // })
 
-   
-  }
 componentDidMount(){
 
 //alert(this.props.array)
@@ -203,26 +161,22 @@ componentDidMount(){
 
 
             <TextValidator
-             select
-             name="employee-name"
-             label="Name"
-            onChange={this.handleChange('id')}
+           
+             name="festival"
+             label="festival"
+            onChange={this.handleChange('festival')}
              margin="normal"
-             value={this.state.id}
+             value={this.state.festival}
             className={classes.textField}>
-             {this.state.array.map(option => (
-            <MenuItem key={option.value}  value={option.value}>
-             {option.label}
-             </MenuItem>
-                ))}
+            
       </TextValidator>
 
       <br/>
               <TextValidator
-                name="reason"
-                label="reason"
-                value={this.state.reason}
-                onChange={this.handleChange('reason')}
+                name="comments"
+                label="comments"
+                value={this.state.comments}
+                onChange={this.handleChange('comments')}
            
                 // validators={['required', 'isEmail']}
                 // errorMessages={['this field is required', 'email is not valid']}
@@ -256,26 +210,12 @@ componentDidMount(){
 }
 
 
-// const array=(props)=>{
-//     return alert(this.props)
-// }
-
-
 
 
 const mapStateToPropss = (state) => {
 
 
-// var c=[]
-//     state.zyudlyemployee.map((s)=>{
-//         //alert(s.emp_name)
-//         c.push({
-//            value:s.emp_name ,
-//             label:s.emp_name
-//         })
-//         console.log(c)
-//     })
-    // alert(state.zyudlyemployee)
+
     return {
     posts1: state,
    

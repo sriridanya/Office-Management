@@ -8,6 +8,7 @@ import Calendar from "react-big-calendar";
 import Form from './form'
 import moment from 'moment'
 import Payslip from './payslip'
+import Paper from '@material-ui/core/Paper';
 import CaRD from './cards'
 
 
@@ -25,6 +26,21 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 const localizer = Calendar.momentLocalizer(moment) 
+
+
+const event=[
+ 
+  {
+   // id: 0,
+    title: 'All Day Event very long title',
+    allDay: true,
+    start:'16-Nov-2018',
+    end: '17-Nov-2018',
+  },
+ 
+  
+
+              ]	
 const views=['month','week', 'day', 'agenda']
 class Recruitment extends Component{ 
     constructor(props) {
@@ -57,11 +73,19 @@ class Recruitment extends Component{
 
 
       removeevent(e){
-        
+      //  alert(e.start)
+      //  alert(e.end)
 console.log(e)
 
-
-  //    alert(e.employee)
+var title=e.title
+var start=e.start
+var end=e.end
+var id=e.id
+var status=e.status
+var employeeid=e.employeeid
+var description=e.description
+//alert(e.status)
+//alert(e.style.backgroundColor)
    
 
         var array =this.props.posts1.zyudlyemployee
@@ -69,20 +93,23 @@ console.log(e)
 
 
           var candiate={
-            title:e.title,
-            start:e.start,
-            end:e.end,
-            id:e.id,
+            title:title,
+            start:start,
+            end:end,
+            id:id,
             ok:true,
-            status:e.status,
+            status:status,
             img:doc.img,
             mobile:doc.mobile,
             email:doc.email,
-            employeeid:e.employeeid,
-            description:e.description
+            employeeid:employeeid,
+            description:description,
+            // endmonthyear:e.endmonthyear,
+            // startmonthyear:e.startmonthyear,
+            // backgroundColor:e.style.backgroundColor,
           }
        
-            if(doc.employee_id===e.employeeid)
+            if(doc.employee_id===employeeid)
             {
            //alert('success')  
             // alert(candiate.img)
@@ -149,7 +176,7 @@ ss.push(doc.data())
 //    console.log(ss)       
 
 });
-
+event
 })
 .catch(function(error) {
 console.log("Error getting documents: ", error);
@@ -182,30 +209,26 @@ leave:ss
 
 
 handleSelect = ({ start, end }) => {
-//    const title = window.prompt('New Event name')
 
+  alert(start)
+  alert(end)
 
-// const title = window.prompt('New Event name')
-// if (title)
+//alert(new Date().toString().substring(16,24))
+
 // this.setState({
-//   leave: [
-//     ...this.state.leave,
-//     {
-//       start,
-//       end,
-//       title
-//     },
-//   ],
+// form:true,
+// start:start.toString().substring(0,15)+new Date().toString().substring(15,24),
+// end:end.toString().substring(0,15)+new Date().toString().substring(15,24)
 // })
 
 this.setState({
-form:true,
-start:start,
-end,end
-})
+  form:true,
+  start:start,
+  end:end
+  })
 
-// alert(this.state.start);
-// alert(this.state.end);
+//  alert(this.state.start);
+//  alert(this.state.end);
 }
 
 handleAddressEditcolse(){
@@ -221,6 +244,7 @@ newEvent(event,start) {
 
   
 }
+
 resizeEvent(event){
 
 const db = firebase.firestore();
@@ -247,10 +271,13 @@ var id=event.event.id;
 
    
     render(){
+      
         const data={
             start:this.state.start,
             end:this.state.end
           }
+
+          const { classes } = this.props;
 //alert(this.props.array)
 
 
@@ -259,11 +286,14 @@ var id=event.event.id;
 
 
       //  alert(this.props.posts.ok)
-        return(<div>
-          {/* <div style={{width:'60%',marginLeft: '20%'}}> <CaRD array={this.props.array}/></div> 
-          <br/> */}
+        return(
+        <div>
+          <div style={{width:'65%'}}> <CaRD array={this.props.array}/></div> 
+          <br/>
          
             <div >
+              
+            <Paper >
 
 
                  <div style={{width:'65%',marginTop:"20px",float:'left'}}>
@@ -288,7 +318,7 @@ var id=event.event.id;
                           eventPropGetter={event => ({
                             style: {
                                 backgroundColor: 
-                                     "#78aad6"
+                                     "#ad4ca4"
                                     
                             }
                         })}
@@ -302,6 +332,7 @@ var id=event.event.id;
 
 
            </div> 
+           </Paper>
           
            <div style={{marginTop:"62px",float:'right'}} >
 

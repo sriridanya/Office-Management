@@ -294,7 +294,7 @@ reason(e){
   }
 
 handleCandidateEditcolse() {
-
+alert('dddd')
     this.setState({
       candidateEdit : false,
     })

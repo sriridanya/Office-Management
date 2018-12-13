@@ -35,8 +35,8 @@ class  FloatingActionButtons extends Component {
 }
 
     handleProjectEdit() {
-        console.log("basic edit function")
-        console.log(this.state.projectEdit)
+        // console.log("basic edit function")
+        // console.log(this.state.projectEdit)
         this.setState({
           projectEdit: true,
       
@@ -45,7 +45,7 @@ class  FloatingActionButtons extends Component {
       }
     handleProjectEditcolse() {
 
-        console.log("handleBasicEditcolse")
+        // console.log("handleBasicEditcolse")
     
         this.setState({
           projectEdit: false,

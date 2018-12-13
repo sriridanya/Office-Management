@@ -6,14 +6,14 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {connect} from 'react-redux';
 import Avatar from 'react-avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { Icon } from 'react-icons-kit'
-import {ic_create} from 'react-icons-kit/md/ic_create'
+
 import {ic_close} from 'react-icons-kit/md/ic_close'
 import swal from 'sweetalert';
 import * as firebase from 'firebase';
@@ -68,7 +68,7 @@ class MediaCard extends Component{
                   
                 }
                 componentWillMount(){
-                  console.log(this.props)
+                //  console.log(this.props)
                 }
 
 
@@ -88,7 +88,7 @@ class MediaCard extends Component{
     this.props.update()
     this.props.dispatch({
       type:'EMPLOYEE_CLOSE',
-      close }),
+      close })
       swal("removing record successfully", "", "success")
      
    },1000)
@@ -225,11 +225,13 @@ return updateMany.then(res => {
                   const { classes } =this.props;
 
                //  alert(this.props.posts1)
-
+               var statusaccept
              
  if(this.props.posts1.status !=='accept' && this.props.posts1.status !=='reject' &&this.props.posts1.status !=='leave add by hr' )
  {
-  var statusaccept  = <div><Button   className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#10a321'}}   onClick={this.accept}>
+
+ 
+   statusaccept  = <div><Button   className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#10a321'}}   onClick={this.accept}>
          accept
        </Button>
         <Button  className={classes.textField} variant="contained" style={{color:'white',backgroundColor:'#940007'}}  onClick={this.reject}>
@@ -237,7 +239,7 @@ return updateMany.then(res => {
        </Button>
        </div>
  }else{
-   var statusaccept=null
+    statusaccept=null
  }
      
 

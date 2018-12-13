@@ -7,18 +7,16 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import TextValidator  from 'react-material-ui-form-validator';
-import Typography from '@material-ui/core/Typography';
+
 import TextField from '@material-ui/core/TextField';
 import Payslip from './payslip'
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 
-import { DatePicker } from 'material-ui-pickers';
+
+
 import {connect} from 'react-redux';
 import * as firebase from 'firebase';
 
-import * as firbase from "firebase"
+
 const styles = theme=>({
   card: {
     minWidth: 275,
@@ -84,7 +82,7 @@ class SimpleCard extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.submit = this.submit.bind(this);
       this.handleCandidateEditcolse=this.handleCandidateEditcolse.bind(this);
-    //   this.handleSubmit = this.handleSubmit.bind(this);
+   
     }
 
     handleChange = name => event => {
@@ -97,18 +95,18 @@ class SimpleCard extends Component {
 
       handleCandidateEditcolse(){
        
-     //   alert('nass '+this.state.submmited)
+    
         this.setState({
           submmited:false
       })
       }
 
       submit(){
-     //   alert(new Date(this.state.monthyear).toUTCString())
+   
       
 
 var emp=[]
-//alert(this.state.id)
+
 var data= new Date(this.state.monthyear)
 var month=data.toString().substring(4, 7)
 var year=data.toString().substring(10, 15)
@@ -120,11 +118,8 @@ const db = firebase.firestore();
    db.collection("hr").where("employeeid", "==", this.state.id)
    .get()
    .then(function(querySnapshot) {
-     console.log(querySnapshot.docs)
+   //  console.log(querySnapshot.docs)
     if(querySnapshot.docs.length===0){
-     alert('no record')
- 
- 
      
     }
        querySnapshot.forEach(function(doc) { 
@@ -134,60 +129,35 @@ const db = firebase.firestore();
      var doccc=  doc.data()
        emp.push(doccc)
        var a = emp.indexOf(doccc);
-      // alert(a)
-      // alert(a)
+    
        emp[a].identy = monthyear;
-       //alert(emp)
-
-       console.log(emp)
-  //     }
+     
+      // console.log(emp)
+ 
        }else{
-       // emp.push({identy: monthyear})
+      
        }
        });
+   }).then(()=>{
+    this.setState({
+      submmited:true,
+      arrays:emp,
+      })
+
    })
  
    .catch(function(error) {
-       console.log("Error getting documents: ", error);
+       //console.log("Error getting documents: ", error);
    });
  
 
 
 
 
-
-       //alert(monthyear)
-setTimeout(()=>{
-
-
-// if(emp.length !==0){
-this.setState({
-submmited:true,
-arrays:emp,
-}),console.log(emp)
-// }
-
-// else{
-//   alert('no data')
-// }
-},3000)
-
-// setTimeout(()=>{
-
-// },4000)   
       }
     
     
     
-      // componentWillMount(){
-
-      //   setTimeout(()=>{
-      //     this.setState({
-      //       array:this.props.array
-      //     })
-      //   },2000)
-       
-      // }
 
       
 
@@ -272,6 +242,7 @@ const mapStateToPropss = (state) => {
          value:s.employee_id ,
           label:s.emp_name
       })
+      return false;
     //  console.log(c)
   })
   // alert(state.zyudlyemployee)

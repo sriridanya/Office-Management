@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-// import empdata from '../employeedata'
-// import classNames from 'classnames';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import TextField from '@material-ui/core/TextField';
 import compose from 'recompose/compose'
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import swal from 'sweetalert';
 import {connect} from 'react-redux';
@@ -74,7 +72,7 @@ class BasicEdit extends Component {
 
 
   componentWillMount(){
-    console.log(this.props.update)
+    // console.log(this.props.update)
   }
 
   handleSubmit() {
@@ -85,13 +83,13 @@ const db = firebase.firestore();
 var addDoc = db.collection('holidays').doc();
 
 
-var month=this.state.end.toString().substring(4, 7)
-var year=this.state.end.toString().substring(10, 15)
+// var month=this.state.end.toString().substring(4, 7)
+// var year=this.state.end.toString().substring(10, 15)
 
 
 
-var month1=this.state.start.toString().substring(4, 7)
-var year1=this.state.start.toString().substring(10, 15)
+// var month1=this.state.start.toString().substring(4, 7)
+// var year1=this.state.start.toString().substring(10, 15)
 
 var empnew=  addDoc.set({
 title: this.state.festival,
@@ -114,9 +112,9 @@ return empnew.then(res => {
     this.setState({
         festival:'',
         comments:''
-    }),
+    })
     swal("record added successfully", "", "success")
-   ,this.props.update()
+   this.props.update()
   },2000)
   
 })

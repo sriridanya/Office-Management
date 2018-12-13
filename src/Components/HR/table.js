@@ -37,7 +37,7 @@ const styles = theme => ({
 class SpanningTable extends Component {
   constructor(props) {
     super(props)
-  alert(props.array)
+  //alert(props.array)
     this.state = { id:'',
    data:props.array
   }

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import * as firebase from 'firebase'
 import {withRouter} from "react-router-dom";
 
-import Drawer from '../ResponsiveDrawer1/drawer';
+//import Drawer from '../ResponsiveDrawer1/drawer';
 import Cookies from 'js-cookie';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -80,7 +80,7 @@ this.handleSignin = this.handleSignin.bind(this);
 
 // console.log(this.state.username)
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((ss) => {
-      console.log("this my console"+ss.user.uid)
+      // console.log("this my console"+ss.user.uid)
       // this.setState({ login:true });
       Cookies.set('token',ss.user.uid);
       this.props.onsubmit();
@@ -90,7 +90,7 @@ this.handleSignin = this.handleSignin.bind(this);
     }).catch(function(error) {
       // Handle Errors here.
     this.setState({error:error.code})
-      var errorMessage = error.message;
+     // var errorMessage = error.message;
       // ...
       if (this.state.error === 'auth/user-not-found') {
         this.setState({errormsg:'Invalid user name or password',email:'',password:''},() => {

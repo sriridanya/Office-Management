@@ -52,7 +52,7 @@ import Calenderevents from '../calenderevents/events';
 import Recruitment from '../Recruitment/Recruitment'
 import Employee from '../Employee/Employee';
 //import Admin from '../admin/sample';
-import Progress from '../progress'
+
 import da from '../Recruitment/adminaccesscontroller'
 import Employeehomepage from '../workers/employeehomepage'
 import Notification from '../Recruitment/notification'
@@ -63,7 +63,7 @@ import {connect} from 'react-redux';
 
 
 import logo from '../../ZyudlyLabs.png'
-import { Connect } from 'indefinite-observable';
+
 
 
 const drawerWidth = 240;
@@ -176,7 +176,7 @@ class MiniDrawer extends React.Component {
       
       }
       notificationclose(){
-       // console.log('na aaaaaaaa')
+      
         this.setState({ notification: !this.state.notification });
       }
 
@@ -184,9 +184,7 @@ class MiniDrawer extends React.Component {
 
       update(){
         var _this=this
-        //var empList=[]
-
-   // console.log("running")
+      
 
    var db=firbase.firestore()
 
@@ -204,19 +202,18 @@ class MiniDrawer extends React.Component {
             })
           }           
              });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    })
-
-    setTimeout(() => {
+    }).then(()=> {
       _this.setState({
         status:c,
         length:c.length
       })
-      console.log("here"+_this.state.status) 
-   console.log("here"+_this.state.status.length) 
-    },2000)
+
+    })
+    
+    .catch(function(error) {
+        // console.log("Error getting documents: ", error);
+    })
+
       }
 
 
@@ -228,89 +225,59 @@ class MiniDrawer extends React.Component {
         var _this=this
          var empList=[]
 
-    // console.log("running")
-
+ 
     var db=firbase.firestore()
 
-//  const settings = {/* your settings... */ timestampsInSnapshots: true};
-//  db.settings(settings);
-
-//alert(Cookies.get('token'))
 
 
 
-  //   var c=[];
-  //   db.collection("hr").where("employeeid", "==", Cookies.get('token'))
-  //   .get()
-  //   .then(function(querySnapshot) {
-  //       querySnapshot.forEach(function(doc) {
-  //        // alert(doc.data().status)
+    var c=[];
+    db.collection("hr").where("employeeid", "==", Cookies.get('token'))
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+         // alert(doc.data().status)
 
-  //        if(doc.data().notification===''&& doc.data().status !==''){
+         if(doc.data().notification===''&& doc.data().status !==''){
 
          
-  //           c.push({
-  //             'status':doc.data().status,
-  //             'id':doc.data().id
-  //           })
-  //         }           
-  //            });
-  //   })
-  //   .catch(function(error) {
-  //       console.log("Error getting documents: ", error);
-  //   })
+            c.push({
+              'status':doc.data().status,
+              'id':doc.data().id
+            })
+          }           
+             });
+    }).then(()=> {
+      _this.setState({
+        status:c,
+        length:c.length
+      })
 
-  //   setTimeout(() => {
-  //     _this.setState({
-  //       status:c,
-  //       length:c.length
-  //     })
-  //     console.log("here"+_this.state.status) 
-  //  console.log("here"+_this.state.status.length) 
-  //   },2000)
+    })
+    .catch(function(error) {
+        // console.log("Error getting documents: ", error);
+    })
+
+  
     var docRef=db.collection("zyudlyemployee")
 
 
-    //var docRef = db.collection("cities").doc("SF");
+   
     docRef.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-       //    console.log(doc.data());
-         // console.log('array data'+doc.data().id)
+       
          
           empList.push(doc.data())
-      });
-     setTimeout(()=>{console.log('empList'),console.log(empList)},2000)  
-    setTimeout(()=>{ _this.props.dispatch({
-      type:'ZYUDLY_EMPLOYEE',
-      empList});},1000)  
-   
+      })
+     }).then(()=> {
+      _this.props.dispatch({
+        type:'ZYUDLY_EMPLOYEE',
+        empList})
+        _this.setState({email:Cookies.get('email'),password:Cookies.get('password')})
+        // console.log(this.state.email)
+        // console.log(this.state.password)
+    })
 
-
-
-
-     })
-       
-        setTimeout(() => _this.setState({email:Cookies.get('email')}), 1000)
-        setTimeout(() =>  _this.setState({password:Cookies.get('password')}), 1000)
-        setTimeout(() =>  {console.log(this.state.email)
-         // setTimeout(() =>  this.setState({progress:true}), 3000)
-        console.log(_this.state.password)}, 3000)
-
-    // var  HR_admin={
-    //   email:'gopinathsiva49@gmail.com',
-    //  // password:'9962141518'
-    // }
-
-
-   
-    // const settings = {/* your settings... */ timestampsInSnapshots: true};
-    // db.settings(settings);
-  
-   
-
-
-    
       
     }
   handleDrawerOpen = () => {
@@ -333,7 +300,6 @@ class MiniDrawer extends React.Component {
     const { classes, theme } = this.props;
     
 
-//console.log("ssss"+this.props.allowed);
 var recruitment = <NavLink style={{textDecoration: 'none'}} to='/recruitment'>
 <ListItem button>
   <ListItemIcon>
@@ -370,7 +336,7 @@ var hrpage=<NavLink style={{textDecoration: 'none'}} to='/HR'>
 <ListItemText primary="hr" />
 </ListItem>
 </NavLink>
-user_circle
+// user_circle
 
 var employeehomepage=<NavLink  style={{textDecoration: 'none'}} to='/workers'>
 <ListItem button>
@@ -382,34 +348,34 @@ var employeehomepage=<NavLink  style={{textDecoration: 'none'}} to='/workers'>
 </NavLink>
 
 //var Calenderevents=
-
+var employee1,project1,recruitment1,hrpage1,employeehomepage1
 
 if (this.state.Main_Admin===this.state.email) {
 
-  var employee1=employee;
-  var project1=project;
-  var recruitment1=recruitment;
-  var hrpage1=hrpage;
-  var employeehomepage1=employeehomepage
+   employee1=employee;
+   project1=project;
+   recruitment1=recruitment;
+   hrpage1=hrpage;
+   employeehomepage1=employeehomepage
 //  var Calenderevents1=Calenderevents
 }else if( this.state.email===this.state.HR){
-  var employee1=employee;
+   employee1=employee;
   //var project1=project;
-  var recruitment1=recruitment;
-  var hrpage1=hrpage;
-  var employeehomepage1=employeehomepage
+   recruitment1=recruitment;
+   hrpage1=hrpage;
+   employeehomepage1=employeehomepage
 }
 else if(this.state.HR_admin===this.state.email){
-  var employee1=employee;
-  var recruitment1=recruitment;
-  var employeehomepage1=employeehomepage
+   employee1=employee;
+   recruitment1=recruitment;
+   employeehomepage1=employeehomepage
 }else if(this.state.zyudly_empolyee===this.state.email){
-  var recruitment1=recruitment;
-  var employeehomepage1=employeehomepage
+   recruitment1=recruitment;
+   employeehomepage1=employeehomepage
 
 }
  else {
-  var button = null
+ 
 }
 
 

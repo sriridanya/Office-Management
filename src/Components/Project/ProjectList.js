@@ -109,7 +109,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
 });
-console.log(projectdata.length);
+// console.log(projectdata.length);
 class CustomPaginationActionsTable extends React.Component {
 constructor(props) {
     super(props)
@@ -142,7 +142,7 @@ constructor(props) {
       showprj:true,
       prjId: Id.prj_id
     });
-    console.log(this.state.prjId)
+    // console.log(this.state.prjId)
 }
 onPrjClose(Id) {
   
@@ -151,7 +151,7 @@ onPrjClose(Id) {
       showprj:false,
      
     });
-    console.log(this.state.prjId)
+    // console.log(this.state.prjId)
 }
 
   render() {

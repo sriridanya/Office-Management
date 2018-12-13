@@ -1,7 +1,7 @@
 import React from 'react';
 import Stepper from 'react-stepper-horizontal';
 import Rejected from './rejected';
-import { FaBeer } from 'react-icons/fa';
+
 
 
 
@@ -9,7 +9,7 @@ class HorizontalLinearStepper extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log("skilllllll"+props.status)
+    // console.log("skilllllll"+props.status)
     this.state = {
 
       status:props.status,
@@ -73,13 +73,13 @@ class HorizontalLinearStepper extends React.Component {
       });
     }
 
-    console.log('noss'+this.state.no);
+    // console.log('noss'+this.state.no);
 
    
   }
   
   render() {
-    console.log('no'+this.state.no)
+    // console.log('no'+this.state.no)
     
       return (
         <div>

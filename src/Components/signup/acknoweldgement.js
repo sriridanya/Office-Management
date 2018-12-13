@@ -1,19 +1,15 @@
 import React,{Component}from 'react';
-import Button from '@material-ui/core/Button';
 
-import TextField from '@material-ui/core/TextField';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { NavLink } from 'react-router-dom'
 ///import Button from '@material-ui/core/Button';
-import compose from 'recompose/compose'
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Login from '../../App'
-import { Route, Switch } from 'react-router-dom';
-
-import * as firebase from "firebase"
+import { Route} from 'react-router-dom';
 
 
 

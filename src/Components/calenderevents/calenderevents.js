@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import moment from "moment";
-import welcomeImage from "./welcome.svg";
-import spinner from './spinner.svg';
+
 import axios from 'axios';
-import { GOOGLE_API_KEY, CALENDAR_ID } from "./client_id.json";
+
 
 export default class App extends Component {
   constructor(props) {
@@ -33,7 +32,7 @@ export default class App extends Component {
             axios.post('http://localhost:3003/calenderevents')
             .then((result) => {
             //  alert(result)
-              console.log(result.data)
+           //   console.log(result.data)
           
             let events = result.data;
             let sortedEvents = events.sort(function(a, b) {
@@ -156,7 +155,7 @@ export default class App extends Component {
           <a
             className="primary-cta"
             href="https://calendar.google.com/calendar?cid=c3FtMnVkaTFhZGY2ZHM3Z2o5aDgxdHVldDhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ"
-            target="_blank"
+           
           >
             +
           </a>

@@ -59,7 +59,7 @@ class DocumentEdit extends Component {
   }
   handleSubmit() {
     if (this.state.uploadedFile === '') {
-      alert("Upload a file to save")
+     // alert("Upload a file to save")
     }
     else {
       this.setState({
@@ -77,7 +77,7 @@ class DocumentEdit extends Component {
 
     const myFileItemReader = new FileReader()
     myFileItemReader.addEventListener("load", () => {
-      console.log(myFileItemReader.result)
+     // console.log(myFileItemReader.result)
       this.setState({ uploadedFileSrc: myFileItemReader.result })
     }, false)
     myFileItemReader.readAsDataURL(this.state.uploadedFile)
@@ -112,7 +112,7 @@ class DocumentEdit extends Component {
             <ValidatorForm
               ref="form"
               onSubmit={this.handleSubmit}
-              onError={errors => console.log(errors)}
+             // onError={errors => console.log(errors)}
             >
 
               {uploadedFileSrc != null ? <div> <img src={uploadedFileSrc} alt="document" height="250" width="300" /></div> :

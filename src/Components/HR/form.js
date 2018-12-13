@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import TextField from '@material-ui/core/TextField';
 import compose from 'recompose/compose'
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import swal from 'sweetalert';
 import {connect} from 'react-redux';
@@ -18,7 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import * as firebase from 'firebase';
-import notification from '../Recruitment/notification';
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -73,7 +73,7 @@ class BasicEdit extends Component {
 
 
   componentWillMount(){
-    console.log(this.props.update)
+    // console.log(this.props.update)
   }
 
   handleSubmit() {
@@ -87,12 +87,14 @@ class BasicEdit extends Component {
   var  emp_name
   //var color
 var hh=this.props.posts1.zyudlyemployee
+
 hh.filter((doc)=>{
 
-if(doc.employee_id==this.state.id){
-  emp_name=doc.emp_name
+if(doc.employee_id===this.state.id){
+   emp_name=doc.emp_name
+   return true;
 }
-
+return false;
 
 })
 
@@ -136,41 +138,15 @@ return empnew.then(res => {
     this.setState({
     reason:'',
      id:''
-    }),
-    swal("record added successfully", "", "success"),
+    })
+    swal("record added successfully", "", "success")
     this.props.update()
   },2000)
   
 })
 
-
-//alert(emp_name)
-    // console.log(this.props.Id.uid);
-    // var db = firebase.firestore();
-    // var basicRef = db.collection('zyudlyemployee').doc(this.props.Id.uid);
-    // var updateMany = basicRef.update({
-    //   emp_name: this.state.name,
-    //   email: this.state.email,
-    //   mobile: this.state.mobile
-    // });
-    // // [END update_document_many]
-  
-    // return updateMany.then(res => {
-    //   console.log('Update: ', res);
-    
-    //   this.setState({ submitted: true }, () => {
-    //     setTimeout(() => this.setState({ submitted: false })
-    //     , 5000);
-    //   });
-    // })
-
-   
   }
 componentDidMount(){
-
-//alert(this.props.array)
-  // Set the 'capital' field of the city
- 
 
  
   

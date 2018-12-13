@@ -44,9 +44,10 @@ const styles = theme => ({
 ////////////////////////////////////////access for hr admin ///////states////////
 
 if(Cookies.get('email')===da.HR_admin){
+  var Status;
 //alert(da.HR_admin);
 //alert(Cookies.get('email'))
-var Status = [
+ Status = [
   // {
   //   value: 'Waiting for interview',
   //   label: 'Waiting for interview',
@@ -62,7 +63,7 @@ var Status = [
 
 }else if(Cookies.get('email')===da.Main_Admin){
 
-  var Status = [
+   Status = [
      {
        value: 'Waiting for interview',
        label: 'Waiting for interview',
@@ -97,7 +98,7 @@ var Status = [
 
 else if(Cookies.get('email')===da.HR){
 if(Cookies.get('status')==='HR-Review'){
-  var Status = [
+   Status = [
     
    
     {
@@ -122,7 +123,7 @@ if(Cookies.get('status')==='HR-Review'){
 }else if(Cookies.get('status')==='Interview Schedule'){
 
 
-  var Status = [
+   Status = [
     
    
     // {
@@ -146,7 +147,7 @@ if(Cookies.get('status')==='HR-Review'){
 
 }else{
   
-  var Status = [
+   Status = [
     
    
     {
@@ -168,7 +169,7 @@ if(Cookies.get('status')==='HR-Review'){
 ////////////////////////////////////////access for engineer ///////states////////
 else{
   
-  var Status = [
+   Status = [
     
    
     {
@@ -230,7 +231,7 @@ class EmployeeAdd extends Component {
   constructor(props) {
     super(props)
 
-    console.log("skilllllll"+props.datas.skilset)
+    // console.log("skilllllll"+props.datas.skilset)
     this.state = {
        candidate_name:props.datas.candidate_name,
        post_apply: props.datas.post_apply,
@@ -282,7 +283,7 @@ class EmployeeAdd extends Component {
       [name]: event.target.value,
     });
 
-    console.log('name karo'+this.state.status)
+    // console.log('name karo'+this.state.status)
   };
 
  componentDidMount(){
@@ -292,7 +293,7 @@ setTimeout(()=>{ Cookies.set('status',this.state.status);
 
 
   handleAddChip(event) {
-    console.log(event);
+    // console.log(event);
     this.setState({
       skilset: event,
     });
@@ -327,7 +328,7 @@ setTimeout(()=>{ Cookies.set('status',this.state.status);
 
 
      //e.preventDefault();
-     console.log('function is calling'+this.state.uid);
+    //  console.log('function is calling'+this.state.uid);
     
      const db = firebase.firestore();
     //  const settings = {/* your settings... */ timestampsInSnapshots: true};
@@ -370,10 +371,10 @@ setTimeout(()=>{ Cookies.set('status',this.state.status);
 
   }
   onDrop(acceptedFiles, rejectedFiles) {
-    console.log('Accepted files: ', acceptedFiles[0]);
+    // console.log('Accepted files: ', acceptedFiles[0]);
     var img=acceptedFiles[0];
   this.setState({img:img})
-  console.log('state file:',this.state.img);
+  // console.log('state file:',this.state.img);
     this.setState({img,uploadedFileSrc:acceptedFiles[0].name}); 
 }
 

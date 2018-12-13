@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 // import empdata from '../employeedata'
 // import classNames from 'classnames';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import TextField from '@material-ui/core/TextField';
 import compose from 'recompose/compose'
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import swal from 'sweetalert';
 import {connect} from 'react-redux';
@@ -16,7 +16,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import ValidatorForm from 'react-material-ui-form-validator';
 import * as firebase from 'firebase';
 const styles = theme => ({
   container: {
@@ -48,7 +48,7 @@ const styles = theme => ({
 class BasicEdit extends Component {
   constructor(props) {
     super(props)
-   alert(props.ids)
+  // alert(props.ids)
     this.state = {
 id:props.ids
     };
@@ -73,7 +73,7 @@ return remove.then(res => {
  
   setTimeout(()=>{
   
-    swal("record delect successfully", "", "success"),
+    swal("record delect successfully", "", "success")
     this.props.update()
     this.props.handleClose()
    

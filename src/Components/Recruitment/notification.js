@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Cookies from 'js-cookie';
+
 import * as firebase from 'firebase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -59,7 +58,7 @@ const styles = theme => ({
   }
 
   remove(e){
-    alert(e)
+   // alert(e)
     const db = firebase.firestore();
 
   
@@ -92,7 +91,7 @@ return updateMany.then(res => {
   render() {
   //  alert(this.state.reasons)
   //console.log(this.state.reasons)
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.assign}>
  

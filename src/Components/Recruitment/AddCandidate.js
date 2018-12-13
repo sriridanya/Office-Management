@@ -201,7 +201,7 @@ this.setState({skilset:skilset1})
 
 
   handleAddChip(event) {
-    console.log(event);
+    // console.log(event);
     this.setState({
      skilset: event,
     });
@@ -261,7 +261,7 @@ this.setState({skilset:skilset1})
   var addDoc = db.collection('employeelist').doc();
 
 
-var empnew=  addDoc.set({
+ addDoc.set({
   candidate_name: this.state.candidate_name,
            email: this.state.email,
             mobile:this.state.mobile,
@@ -289,13 +289,13 @@ var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 swal('Upload is ' + progress + '% done');
 switch (snapshot.state) {
 case firebase.storage.TaskState.PAUSED: // or 'paused'
-  console.log('Upload is paused');
+  // console.log('Upload is paused');
   break;
 case firebase.storage.TaskState.RUNNING: // or 'running'
-  console.log('Upload is running');
+  // console.log('Upload is running');
   break;
   default:
-  console.log('default')
+  // console.log('default')
   break;
 }
 }, function(error) {
@@ -304,20 +304,20 @@ case firebase.storage.TaskState.RUNNING: // or 'running'
 // https://firebase.google.com/docs/storage/web/handle-errors
 switch (error.code) {
 case 'storage/unauthorized':
-console.log(' User doesn\'t have permission to access the object')
+// console.log(' User doesn\'t have permission to access the object')
 break;
 
 case 'storage/canceled':
-console.log(' User canceled the upload')
+// console.log(' User canceled the upload')
 break;
 
 
 
 case 'storage/unknown':
-console.log('Unknown error occurred, inspect error.serverResponse')
+// console.log('Unknown error occurred, inspect error.serverResponse')
 break;
 default:
-console.log('default')
+// console.log('default')
 break;
 }
 }, function() {
@@ -325,14 +325,14 @@ break;
 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
 
 var imgurl=downloadURL;
-console.log('imhurl working',imgurl);
+// console.log('imhurl working',imgurl);
 var basicRef = db.collection('employeelist').doc(addDoc.id);
-var updateMany = basicRef.update({
+ basicRef.update({
 
 img:imgurl,
 });
-console.log('img upload success',updateMany);
-console.log('File available at', downloadURL);
+// console.log('img upload success',updateMany);
+// console.log('File available at', downloadURL);
 
 });
 
@@ -374,10 +374,10 @@ swal("Successfully Uploaded", "", "success");
 
   }
   onDrop(acceptedFiles, rejectedFiles) {
-    console.log('Accepted files: ', acceptedFiles[0]);
+    // console.log('Accepted files: ', acceptedFiles[0]);
     var img=acceptedFiles[0];
   this.setState({img:img})
-  console.log('state file:',this.state.img);
+  // console.log('state file:',this.state.img);
     this.setState({img,uploadedFileSrc:acceptedFiles[0].name}); 
 }
 

@@ -66,7 +66,7 @@ class BasicEdit extends Component {
     });
   };
   handleSubmit() {
-    console.log(this.props.Id.uid);
+   // console.log(this.props.Id.uid);
     var db = firebase.firestore();
     var basicRef = db.collection('zyudlyemployee').doc(this.props.Id.uid);
     var updateMany = basicRef.update({
@@ -86,7 +86,7 @@ class BasicEdit extends Component {
     // [END update_document_many]
   
     return updateMany.then(res => {
-      console.log('Update: ', res);
+     // console.log('Update: ', res);
     
       this.setState({ submitted: true }, () => {
         setTimeout(() => this.setState({ submitted: false })
@@ -113,7 +113,7 @@ if(this.props.Id.payslip){
 
     })
   }else{
-    alert('not working')
+    //alert('not working')
   }
 } 
 }
@@ -123,15 +123,15 @@ if(this.props.Id.payslip){
     const { submitted } = this.state;
 ///alert(this.state.exceptedsalary/100*30)
 
-var Professional_Tax_Deduction=parseInt(this.state.Professional_Tax_Deduction)
-var TDS=parseInt(this.state.TDS)
-var Special_Allowance=parseInt(this.state.Special_Allowance)
-var Transport_Allowance=parseInt(this.state.Transport_Allowance)
-console.log(this.state.Basic)
+// var Professional_Tax_Deduction=parseInt(this.state.Professional_Tax_Deduction)
+// var TDS=parseInt(this.state.TDS)
+// var Special_Allowance=parseInt(this.state.Special_Allowance)
+// var Transport_Allowance=parseInt(this.state.Transport_Allowance)
+// console.log(this.state.Basic)
 //  var total=parseInt(this.state.Professional_Tax_Deduction)+parseInt(this.state.exceptedsalary/100*30)+parseInt(this.state.Special_Allowance)+parseInt(this.state.TDS)+parseInt(this.state.Transport_Allowance)
 
 
-var total=this.state.TDS+parseInt(this.state.Professional_Tax_Deduction)+parseInt(this.state.Special_Allowance)+parseInt(this.state.exceptedsalary/100*30)
+// var total=this.state.TDS+parseInt(this.state.Professional_Tax_Deduction)+parseInt(this.state.Special_Allowance)+parseInt(this.state.exceptedsalary/100*30)
     return (
       <div>
         <Dialog
@@ -273,7 +273,7 @@ var total=this.state.TDS+parseInt(this.state.Professional_Tax_Deduction)+parseIn
             name="Final Salary"
             label="Final-Salary"
             className={classes.textField}
-            value={parseInt(this.state.exceptedsalary)/100*30+TDS+Professional_Tax_Deduction+Special_Allowance+Transport_Allowance}
+            value={parseInt(this.state.exceptedsalary,10)/100*30+parseInt(this.state.TDS,10)+parseInt(this.state.Professional_Tax_Deduction,10)+parseInt(this.state.Special_Allowance,10)+parseInt(this.state.Transport_Allowance,10)}
            // onChange={this.handleChange('Professional_Tax_Deduction')}
             validators={['required']}
             errorMessages={['this field is required']}

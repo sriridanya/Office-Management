@@ -1,19 +1,19 @@
 
 import React,{Component} from 'react';
-import RecruitmentList from './calender'
+
 import Candiate from './candiate'
 import {connect} from 'react-redux';
 import * as firebase from 'firebase';
 import Calendar from "react-big-calendar";
 import Form from './form'
 import moment from 'moment'
-import Payslip from './payslip'
+
 import Paper from '@material-ui/core/Paper';
 import CaRD from './cards'
 
 
 
-
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.less'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
@@ -28,19 +28,8 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = Calendar.momentLocalizer(moment) 
 
 
-const event=[
- 
-  {
-   // id: 0,
-    title: 'All Day Event very long title',
-    allDay: true,
-    start:'16-Nov-2018',
-    end: '17-Nov-2018',
-  },
- 
-  
 
-              ]	
+            
 const views=['month','week', 'day', 'agenda']
 class Recruitment extends Component{ 
     constructor(props) {
@@ -75,7 +64,7 @@ class Recruitment extends Component{
       removeevent(e){
       //  alert(e.start)
       //  alert(e.end)
-console.log(e)
+// console.log(e)
 
 var title=e.title
 var start=e.start
@@ -111,6 +100,9 @@ var description=e.description
        
             if(doc.employee_id===employeeid)
             {
+
+            
+             
            //alert('success')  
             // alert(candiate.img)
                this.props.dispatch({
@@ -121,6 +113,9 @@ var description=e.description
             }else{
              // alert('failure')  
             }
+
+
+            return false;
           })
 //alert()
 
@@ -134,25 +129,28 @@ var description=e.description
       }
 
       removeevent1(e){
-        alert('ssss')
+     //   alert('ssss')
       }
 
 
       componentWillMount(){
-        const db = firebase.firestore();
-        db.collection("hr").where("employeeid", "==", '4QEHIq2UTNRN6hwzaRf28RnmGJE3').where("monthyear", "==", " Dec 2018")
-        .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              console.log(doc.data())
-                // doc.data() is never undefined for query doc snapshots
+
+
+
+        // const db = firebase.firestore();
+        // db.collection("hr").where("employeeid", "==", '4QEHIq2UTNRN6hwzaRf28RnmGJE3').where("monthyear", "==", " Dec 2018")
+        // .get()
+        // .then(function(querySnapshot) {
+        //     querySnapshot.forEach(function(doc) {
+        //       console.log(doc.data())
+        //         // doc.data() is never undefined for query doc snapshots
              
-               // console.log("555555555555555"+_this.state.WaitingList);
-            });
-        })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
-        });
+        //        // console.log("555555555555555"+_this.state.WaitingList);
+        //     });
+        // })
+        // .catch(function(error) {
+        //     console.log("Error getting documents: ", error);
+        // });
 
       }
 
@@ -176,33 +174,18 @@ ss.push(doc.data())
 //    console.log(ss)       
 
 });
-event
+
+}).then(()=>{
+
+  this.setState({
+    leave:ss
+    })
 })
 .catch(function(error) {
-console.log("Error getting documents: ", error);
+// console.log("Error getting documents: ", error);
 });
 
 
-
-setTimeout(() =>{
-
-let today = new Date()
-//console.log(today)
-
-//console.log(ss)
-//  var sss=ss
-this.setState({
-leave:ss
-})
-//  console.log(_this.state.lead
-},1000)
-
-
-//   setTimeout(() =>{ 
-//  console.log(ss)
-//     _
-//   console.log(this.state.leave)d
-//  },2000)
 
 }
 
@@ -210,8 +193,8 @@ leave:ss
 
 handleSelect = ({ start, end }) => {
 
-  alert(start)
-  alert(end)
+  // alert(start)
+  // alert(end)
 
 //alert(new Date().toString().substring(16,24))
 
@@ -277,7 +260,7 @@ var id=event.event.id;
             end:this.state.end
           }
 
-          const { classes } = this.props;
+          // const { classes } = this.props;
 //alert(this.props.array)
 
 
@@ -363,6 +346,8 @@ const mapStateToPropss = (state) => {
            value:s.employee_id ,
             label:s.emp_name
         })
+
+        return false;
       //  console.log(c)
     })
     // alert(state.zyudlyemployee)

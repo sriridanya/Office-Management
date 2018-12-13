@@ -69,7 +69,7 @@ class AddressEdit extends Component {
     // [END update_document_many]
   
     return updateMany.then(res => {
-      console.log('Update: ', res);
+      // console.log('Update: ', res);
       this.setState({ submitted: true }, () => {
         setTimeout(() => this.setState({ submitted: false }), 5000);
       });
@@ -99,7 +99,7 @@ class AddressEdit extends Component {
             <ValidatorForm
               ref="form"
               onSubmit={this.handleSubmit}
-              onError={errors => console.log(errors)}
+              // onError={errors => console.log(errors)}
             >
 
 

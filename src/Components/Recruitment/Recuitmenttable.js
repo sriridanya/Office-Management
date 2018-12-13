@@ -16,7 +16,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import {deleteIconic} from 'react-icons-kit/iconic/deleteIconic'
+//import {deleteIconic} from 'react-icons-kit/iconic/deleteIconic'
 import Avatar from 'react-avatar';
 import Cookies from 'js-cookie';
 import Notification from './notification'
@@ -255,7 +255,7 @@ constructor(props) {
 //   this.setState({ notification: true });
 
 close(){
-   alert('sss')
+   //alert('sss')
 
   this.setState({ notification: false});
 
@@ -294,7 +294,7 @@ reason(e){
   }
 
 handleCandidateEditcolse() {
-alert('dddd')
+//alert('dddd')
     this.setState({
       candidateEdit : false,
     })
@@ -324,13 +324,13 @@ alert('dddd')
 
   onRecClick(Id) {
   
-  console.log('ok it is enter');
+  // console.log('ok it is enter');
     this.setState({
       showRec:!this.state.showRec,
       recId: Id,
       scroll:'paper'
     });
-    console.log('ok it is enter'+this.state.showRec);
+    // console.log('ok it is enter'+this.state.showRec);
 }
 
 onRecClose(Id) {
@@ -428,7 +428,7 @@ db.collection("employeelist").where("status", "==", 'Waiting for interview')
     });
 })
 .catch(function(error) {
-    console.log("Error getting documents: ", error);
+    // console.log("Error getting documents: ", error);
 });
 
 
@@ -451,7 +451,7 @@ db.collection("employeelist").where("status", "==", 'Waiting for interview')
         });
     })
     .catch(function(error) {
-        console.log("Error getting documents: ", error);
+        // console.log("Error getting documents: ", error);
     });
 
 
@@ -473,7 +473,7 @@ db.collection("employeelist").where("status", "==", 'Waiting for interview')
         });
     })
     .catch(function(error) {
-        console.log("Error getting documents: ", error);
+        // console.log("Error getting documents: ", error);
     });
 
 
@@ -505,7 +505,7 @@ desertRef.delete().then(function() {
   // File deleted successfully
   swal("Success fully Deleted","","success");
 }).catch(function(error) {
-  alert('failure')
+  //alert('failure')
 });
 this.componentWillMount()
 this.componentDidMount()
@@ -545,7 +545,7 @@ setTimeout(() =>{
 
   
     const { classes } = this.props;
-    const { rows, rowsPerPage, page } = this.state;
+    //const { rows, rowsPerPage, page } = this.state;
 
     var addCandidate=<Button  variant="extendedFab" aria-label="Add" style={{ backgroundColor:"#fefefe"}} onClick={this.handleCandidateEdit} >
     <AddIcon className={classes.extendedIcon} />

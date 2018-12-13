@@ -8,15 +8,15 @@ import PropTypes from 'prop-types';
 import moment from "moment";
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import { TimePicker } from 'material-ui-pickers';
+
 import { DatePicker } from 'material-ui-pickers';
-import { DateTimePicker } from 'material-ui-pickers';
+
 import Card from '@material-ui/core/Card';
 //import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import "react-datepicker/dist/react-datepicker.css";
 import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Cookies from 'js-cookie';
 //import { DatePicker } from 'material-ui-pickers';
 import * as firebase from 'firebase';
@@ -29,25 +29,25 @@ import da from '../Recruitment/adminaccesscontroller'
 //const DraggableCalendar = withDragAndDrop(BigCalendar)
 
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
-import notification from '../Recruitment/notification';
+
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = Calendar.momentLocalizer(moment) 
 
 const views=['month','week', 'day', 'agenda']
-const event=[];
+//const event=[];
 
-const empolyeename=[
-{
+// const empolyeename=[
+// {
   
-        value: 'hr-admin',
-        label: 'hr-admin',
-      },
-      {
-        value: 'arun',
-        label: 'arun',
-      },
+//         value: 'hr-admin',
+//         label: 'hr-admin',
+//       },
+//       {
+//         value: 'arun',
+//         label: 'arun',
+//       },
 
-]
+// ]
 const styles =  {
   root:{
     // height:'100%',
@@ -168,39 +168,20 @@ componentDidMount(){
   .then(function(querySnapshot) {
   
   querySnapshot.forEach(function(doc) {
-  // console.log(doc.data())  
+  
   ss.push(doc.data())
-  //    console.log(ss)       
   
   });
   
+  }).then(()=>{
+
+  this.setState({
+    events:ss
+    })
   })
   .catch(function(error) {
-  console.log("Error getting documents: ", error);
-  });
-  
-  
-  
-  setTimeout(() =>{
-  
-  let today = new Date()
-  //console.log(today)
-  
-  //console.log(ss)
-  //  var sss=ss
-  this.setState({
-  events:ss
-  })
-  //  console.log(_this.state.lead
-  },1000)
-  
-  
-  //   setTimeout(() =>{ 
-  //  console.log(ss)
-  //     _
-  //   console.log(this.state.leave)d
-  //  },2000)
-  
+  // console.log("Error getting documents: ", error);
+  });  
   }
   
   
@@ -228,17 +209,15 @@ componentWillMount(){
               c=doc.data().emp_name
                       
                });
-      })
-      .catch(function(error) {
-          console.log("Error getting documents: ", error);
-      })
-  
-      setTimeout(() => {
+      }).then(()=>{
         this.setState({
           title:c
         })
-     
-      },2000)
+      })
+      .catch(function(error) {
+          // console.log("Error getting documents: ", error);
+      })
+  
 }
 
 handleAddressEditcolse(){
@@ -258,7 +237,7 @@ handleChange(date) {
   this.setState({
     startDate: date
   });
- // alert(this.state.startDate)
+
 }
 
 
@@ -268,7 +247,7 @@ handleChange1(date) {
     enddate: date
   });
 
- // alert(this.state.enddate)
+ 
 }
 
 
@@ -282,16 +261,7 @@ update(){
 
 handleSelect = ({ start, end }) => {
 
-  //alert(new Date().toString().substring(15,))
-
-//alert(new Date().toString().substring(16,24))
-
-// this.setState({
-// holiday:true,
-// start:start.toString().substring(0,15)+new Date().toString().substring(15,24),
-// end:end.toString().substring(0,15)+new Date().toString().substring(15,24)
-// })
-
+  
 
 this.setState({
   holiday:true,
@@ -299,8 +269,6 @@ this.setState({
   end:end
   })
 
-// alert(this.state.start);
-// alert(this.state.end);
 }
 
 
@@ -309,8 +277,6 @@ procced()
 
 
 
-//  alert(this.state.startDate.toString().substring(0, 15))
-// alert(this.state.enddate)
  
 var date = new Date(this.state.enddate)
 
@@ -330,7 +296,7 @@ var date = new Date(this.state.enddate)
   var addDoc = db.collection('hr').doc();
 
 
-var empnew=  addDoc.set({
+ addDoc.set({
   title: this.state.title,
  start:this.state.startDate.toString().substring(0, 15),
  end:ending.toString().substring(0, 15),
@@ -359,7 +325,8 @@ notification:''
 
 if(Cookies.get('email')===da.HR || Cookies.get('email')===da.Main_Admin)
 {
- var calender= <DragAndDropCalendar
+  var calender;
+  calender= <DragAndDropCalendar
     selectable={true}
     popupOffset={30}
       localizer={localizer}
@@ -389,7 +356,7 @@ if(Cookies.get('email')===da.HR || Cookies.get('email')===da.Main_Admin)
 }else{
 
 
-  var calender= <DragAndDropCalendar
+   calender= <DragAndDropCalendar
   selectable={true}
   popupOffset={30}
     localizer={localizer}
@@ -446,40 +413,7 @@ if(Cookies.get('email')===da.HR || Cookies.get('email')===da.Main_Admin)
           leave form
         </Typography>
           <div className={classes.type1}>
-        {/* <TextField
-          id="outlined-with-placeholder"
-          label="empolyeename"
-          placeholder="Placeholder"
-          className={classes.textField}
-          onChange={this.onChange1}
-          margin="normal"
-          value={this.state.message}
-          variant="outlined"
-          
-        /> */}
-
-
-          {/* <TextField
-           id="outlined-with-placeholder"
-            select
-            label="empolyeename"
-            onChange={this.onChange1}
-            name="empolyeename"
-            value={this.state.message}
-            validators={['required']}
-            errorMessages={['this field is required']}
-            className={classes.smalltextField}
-            // InputProps={{
-            //   startAdornment: <InputAdornment position="start"></InputAdornment>,
-            // }}
-             >
-             {empolyeename.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-             {option.label}
-            </MenuItem>
-          ))}
-       
-            </TextField> */}
+      
         </div>
         <br/>
         <div className={classes.fromdate}>

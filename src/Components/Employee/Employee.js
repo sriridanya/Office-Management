@@ -58,8 +58,8 @@ update(){
 }
 
 handleEmployeeEdit() {
-      console.log("basic edit function")
-      console.log(this.state.employeeEdit)
+      // console.log("basic edit function")
+      // console.log(this.state.employeeEdit)
       this.setState({
         employeeEdit: true,
     
@@ -68,7 +68,7 @@ handleEmployeeEdit() {
     }
   handleEmployeeEditcolse() {
 
-      console.log("handleBasicEditcolse")
+      // console.log("handleBasicEditcolse")
   
       this.setState({
         employeeEdit: false,
@@ -87,7 +87,7 @@ handleEmployeeEdit() {
     var _this=this;
     var empList=[]
 
-    console.log("running")
+    // console.log("running")
 
     var db=firbase.firestore()
     var docRef=db.collection("zyudlyemployee")
@@ -97,14 +97,14 @@ handleEmployeeEdit() {
     docRef.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
           // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+          // console.log(doc.id, " => ", doc.data());
           empList.push(doc.data())
       });
 
 
      
       _this.setState({employeedetail:empList})
-      console.log("new data",_this.state.employeedetail)
+      // console.log("new data",_this.state.employeedetail)
   });
   
   }

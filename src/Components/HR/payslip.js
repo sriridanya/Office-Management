@@ -15,20 +15,15 @@ import SaveIcon from '@material-ui/icons/Save';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Avatar from 'react-avatar';
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import compose from 'recompose/compose'
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import swal from 'sweetalert';
 import {connect} from 'react-redux';
 //import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
@@ -37,7 +32,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import * as firebase from 'firebase';
 import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
 //import Table from './table'
@@ -88,8 +82,8 @@ var identys;
 function ccyFormat(start,end,startmonthyear,endmonthyear,identy) {
   // alert(start)
   identys=identy
-var date1 = new Date(start);
-var date2 = new Date(end)
+// var date1 = new Date(start);
+// var date2 = new Date(end)
 
  var ends=new Date(identy).toLocaleDateString().substring(3, 5)
  
@@ -113,9 +107,9 @@ value2=value2+case2
 return case2
   
 }else if(startmonthyear!==identy && endmonthyear===identy){
-var  start=0
+var  starts=0
  
- var case3= Math.abs(Math.abs(start-end.substring(8, 10))-1)
+ var case3= Math.abs(Math.abs(starts-end.substring(8, 10))-1)
 
  value3=value3+case3
   return case3
@@ -169,7 +163,7 @@ function final(amount){
 return Math.floor(amount-p).toFixed(2)
    }
    else{
-     alert('hello')
+    // alert('hello')
    }
 
 
@@ -195,78 +189,59 @@ class BasicEdit extends Component {
       TDS:'',
       Professional_Tax_Deduction:'',
       monthyear:props.monthyear
-      // start:'',
-      // end: '',
-      // monthyear:'',
-      // id:'',
-      // reason:'',
-      // array:'',
-      // submmited: false
+    
     };
-    // // this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-   // this.handleClose=this.handleClose.bind(this)
+  
   }
 
-//   handleClose(){
-// alert('naa woo')
-//   }
-
-  
-// componentDidMount(){
-//   alert(this.state.array)
-  
-// }
 
   componentWillMount(){
-   // alert(this.props.id)
+  
 
 var cc
     const db = firebase.firestore();
-    const settings = {/* your settings... */ timestampsInSnapshots: true};
+   // const settings = {/* your settings... */ timestampsInSnapshots: true};
      db.collection("zyudlyemployee").where("employee_id", "==", this.props.id)
     .get()
     .then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
-      console.log(doc.data())
+
+      if(doc.data().payslip){
+      // console.log(doc.data())
       cc=doc.data()
-    })})
+      }else{
+  
+      }
+    })}).then(()=> {
+
+      var _this=this
+      _this.setState({
+        uid:cc.uid,
+        emp_name:cc.emp_name,
+        address:cc.address,
+        email:cc.email,
+        img:cc.img,
+        mobile:cc.mobile,
+          array:this.props.arrays,
+          Basic:cc.payslip.Basic,
+          Transport_Allowance:cc.payslip.Transport_Allowance,
+          Hostel_EXP_Allowance:cc.payslip.Hostel_EXP_Allowance,
+          Special_Allowance:cc.payslip.Special_Allowance,
+          TDS:cc.payslip.TDS,
+          Professional_Tax_Deduction:cc.payslip.Professional_Tax_Deduction, 
+          })
+
+    }
+    
+  )
+
+
+
 
       
-setTimeout(() => {
-  //alert(cc.address)
-  this.setState({
-uid:cc.uid,
-emp_name:cc.emp_name,
-address:cc.address,
-email:cc.email,
-img:cc.img,
-mobile:cc.mobile,
-  array:this.props.arrays,
-  Basic:cc.payslip.Basic,
-  Transport_Allowance:cc.payslip.Transport_Allowance,
-  Hostel_EXP_Allowance:cc.payslip.Hostel_EXP_Allowance,
-  Special_Allowance:cc.payslip.Special_Allowance,
-  TDS:cc.payslip.TDS,
-  Professional_Tax_Deduction:cc.payslip.Professional_Tax_Deduction, 
-  })
-  // this.state.array.map((row,index) => {
-  //  return ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)
-  // })
-}, 2000);
-
-// setTimeout(() => {alert(this.state.array),
-// this.state.array.map((row,index) => {
-//  return ccyFormat(row.start.substring(0, 15),row.end.substring(0, 15),row.startmonthyear,row.endmonthyear,row.identy)
-// })
-// },2500)
   }
 
   render() {
-
-    // alert(Lopsss)
-
-
 
 
     this.state.array.map((row,index) => {
@@ -275,9 +250,9 @@ mobile:cc.mobile,
 
     //var dot=<div style={{float:"left"}}><Typography variant="body2" gutterBottom>:</Typography></div>
      // alert(this.state.emp_name)
-    const { fullScreen } = this.props;
+  
     const { classes } = this.props;
-    const { submitted } = this.state;
+ 
 
     // const lops=Lop
 
@@ -287,15 +262,9 @@ mobile:cc.mobile,
     const noofdays=new Date(this.state.monthyear.substring(0,4), this.state.monthyear.substring(5,7), 0).getDate()
   //alert(this.state.monthyear.substring(0,4))
   //alert(this.state.monthyear.substring(5,7))
-    const Salary=parseInt(this.state.Basic)+parseInt(this.state.Transport_Allowance)+parseInt(this.state.Special_Allowance)+parseInt(this.state.TDS)+parseInt(this.state.Professional_Tax_Deduction)
+    const Salary=parseInt(this.state.Basic,10)+parseInt(this.state.Transport_Allowance,10)+parseInt(this.state.Special_Allowance,10)+parseInt(this.state.TDS,10)+parseInt(this.state.Professional_Tax_Deduction,10)
     return (
 
-// <DialogTitle >
-//   {identys}////after the dialog tag
-// </DialogTitle>
-// <DialogTitle >
-//   {this.state.emp_name}
-// </DialogTitle>
 
 <Dialog
 open={this.props.open}

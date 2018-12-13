@@ -94,8 +94,8 @@ class EmployeeDetails extends Component {
 
   }
   handleBasicEdit() {
-    console.log("basic edit function")
-    console.log(this.state.basicEdit)
+    // console.log("basic edit function")
+    // console.log(this.state.basicEdit)
     this.setState({
       basicEdit: true,
    
@@ -105,8 +105,8 @@ class EmployeeDetails extends Component {
     //this.handleBasicEdit()
   }
   handleProjectEdit(Id) {
-    console.log("basic edit function")
-    console.log(this.state.projectEdit)
+    // console.log("basic edit function")
+    // console.log(this.state.projectEdit)
     this.setState({
       projectEdit: true,
       id: Id
@@ -115,7 +115,7 @@ class EmployeeDetails extends Component {
   }
   handleBasicEditcolse() {
 
-    console.log("handleBasicEditcolse")
+    // console.log("handleBasicEditcolse")
 
     this.setState({
       basicEdit: false,
@@ -124,7 +124,7 @@ class EmployeeDetails extends Component {
   }
   handleProjectEditcolse() {
 
-    console.log("handleBasicEditcolse")
+    // console.log("handleBasicEditcolse")
 
     this.setState({
       projectEdit: false,
@@ -132,8 +132,8 @@ class EmployeeDetails extends Component {
 
   }
   handleDocumentEdit() {
-    console.log("basic edit function")
-    console.log(this.state.projectEdit)
+    // console.log("basic edit function")
+    // console.log(this.state.projectEdit)
     this.setState({
       documentEdit: true,
 
@@ -142,7 +142,7 @@ class EmployeeDetails extends Component {
   }
   handleDocumentEditcolse() {
 
-    console.log("handleBasicEditcolse")
+    // console.log("handleBasicEditcolse")
 
     this.setState({
       documentEdit: false,
@@ -150,8 +150,8 @@ class EmployeeDetails extends Component {
 
   }
   handleAddressEdit() {
-    console.log("basic edit function")
-    console.log(this.state.addressEdit)
+    // console.log("basic edit function")
+    // console.log(this.state.addressEdit)
     this.setState({
       addressEdit: true,
      
@@ -159,7 +159,7 @@ class EmployeeDetails extends Component {
   }
   handleAddressEditcolse() {
 
-    console.log("handleBasicEditcolse")
+    // console.log("handleBasicEditcolse")
 
     this.setState({
       addressEdit: false,
@@ -174,26 +174,26 @@ class EmployeeDetails extends Component {
       var _this=this;
       var empList={};
       var docList=[];
-      console.log("running")
+      // console.log("running")
       var db=firbase.firestore()
       var empRef = db.collection('zyudlyemployee').doc(this.props.match.params.id);
       empRef.get()
           .then(doc => {
             if (!doc.exists) {
-              console.log('No such document!');
+              // console.log('No such document!');
             } 
             else {
-              console.log('Document data:', doc.data());
+              // console.log('Document data:', doc.data());
               empList=doc.data();
 
-              console.log("new data",_this.state.employeedetail)
+              // console.log("new data",_this.state.employeedetail)
             
             }
-            console.log("test data",empList)
+            // console.log("test data",empList)
             _this.setState({employeedetail:empList})
           })
           .catch(err => {
-            console.log('Error getting document', err);
+            // console.log('Error getting document', err);
           });
       
        var docRef=empRef.collection('Documents')
@@ -201,7 +201,7 @@ class EmployeeDetails extends Component {
           docRef.get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
+                // console.log(doc.id, " => ", doc.data());
                 docList.push(doc.data())
                 _this.setState({empdoc:docList})
             });

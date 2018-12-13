@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 ///import Button from '@material-ui/core/Button';
-import compose from 'recompose/compose'
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import Progress from '../progress'
+
 import lottie from 'lottie-web'
 
 import * as firebase from "firebase"
@@ -103,78 +103,43 @@ progress:false
       componentWillMount(){
 
 
-
-        // lottie.loadAnimation({
-        //   container: this.ref, // the dom element that will contain the animation
-        //   renderer: 'svg',
-        //   loop: true,
-        //   autoplay: true,
-        //   path: '../material_wave_loading.json' // the path to the animation json
-        // });
-     
       
        
-        setTimeout(() => {
+       
           var _this=this
           var cc;
 
           const db = firebase.firestore();
-          const settings = {/* your settings... */ timestampsInSnapshots: true};
+         // const settings = {/* your settings... */ timestampsInSnapshots: true};
            db.collection("zyudlyemployee").where("uid", "==", _this.props.match.params.id)
           .get()
           .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
-            console.log(doc.data())
+            // console.log(doc.data())
             cc=doc.data()
-          })})
-        ,
+          })}).then(()=> {
+            _this.setState({
+              uid:cc.uid,
+              emp_name:cc.emp_name,
+              address:cc.address,
+              email:cc.email,
+              img:cc.img,
+              mobile:cc.mobile,
+              
+                  
+                })
+          })
        
-setTimeout(() => {
-  //alert(cc.address)
-  _this.setState({
-uid:cc.uid,
-emp_name:cc.emp_name,
-address:cc.address,
-email:cc.email,
-img:cc.img,
-mobile:cc.mobile,
-
-    
-  })
-}, 2000);
-},500)
-  
-
-
-
-
-// address
-// "204/188 k.v.b garden ra puram chennai-28"
-// email
-// "gopinathsiva49@gmail.com"
-// emp_name
-// "gopinath"
-// employee_id
-// "ss"
-// img
-// "https://firebasestorage.googleapis.com/v0/b/office-management-c1c61.appspot.com/o/o20rkwi3bzKsNbo85lOy%2Fimages%20(1).jpeg?alt=media&token=4d7af9b2-ad02-4a6f-bdfb-fc2060ab828f"
-// mobile
-// "9962141518"
-// uid
-// "o20rkwi3bzKsNbo85lOy"
-
 
       }
       
      handleSignin(){
 
-      alert(this.state.password)
-      alert(this.state.email)
    var  email=this.state.email
-   alert(email)
+ //  alert(email)
       firebase.auth().createUserWithEmailAndPassword(email, this.state.password).then((ss) => {
 
-        console.log("this my console"+ss.user.uid)
+        // console.log("this my console"+ss.user.uid)
 
 
         const db = firebase.firestore();
@@ -195,7 +160,7 @@ mobile:cc.mobile,
         
        });
        return empnew.then(res => {
-        alert(res)
+      //  alert(res)
          this.props.history.push("/acknoweldgement"); 
        })
 
@@ -203,17 +168,17 @@ mobile:cc.mobile,
 
 
       }).catch(function(error) {
-        console.log(error)
+        // console.log(error)
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
         // ...
       });
        
       }
      
     render() {
-console.log(this.state.email)
+// console.log(this.state.email)
       //console.log(this.props.match.params.id)
       
         const { classes } = this.props;

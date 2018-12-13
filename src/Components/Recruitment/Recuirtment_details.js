@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 //import DialogContentText from '@material-ui/core/DialogContentText';
 import { withStyles } from '@material-ui/core/styles';
-import { Container, InputFile } from 'mdbreact';
+
 
 import EditIcon from '@material-ui/icons/Create';
 import TextField from '@material-ui/core/TextField';
 //import Icon from '@material-ui/core/Icon';
-import ButtonBase from '@material-ui/core/ButtonBase';
+
 import swal from 'sweetalert';
 import Avatar from 'react-avatar';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +26,7 @@ import {attachment} from 'react-icons-kit/icomoon/attachment'
 
 
 import dA from './adminaccesscontroller'
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
 import BasicEdit from './Edit'
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -152,8 +152,8 @@ class ResponsiveDialog extends React.Component {
     this.acknowledgement=this.acknowledgement.bind(this);
 
     
-    console.log('sssssssssssssssssssssssssssssssssssssss'+props.data.email)
-    console.log('sssssssssssssssssssssssssssssssssssssss'+this.state.mobile)
+    // console.log('sssssssssssssssssssssssssssssssssssssss'+props.data.email)
+    // console.log('sssssssssssssssssssssssssssssssssssssss'+this.state.mobile)
    
  
  
@@ -186,7 +186,7 @@ class ResponsiveDialog extends React.Component {
 
 emailing(){
 
-  const { description, selectedFile } = this.state;
+  const {selectedFile } = this.state;
     let formData = new FormData();
 
     this.setState({ submitted: true })
@@ -239,7 +239,7 @@ emailing(){
    }
   
   }).catch(function(error) {
-        console.log("Error getting documents: ", error);
+        // console.log("Error getting documents: ", error);
     })
 
 }

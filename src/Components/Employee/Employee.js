@@ -9,13 +9,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Employeeimage from './EmployeeDetails/Employeeimage';
-// import EmployeeDetails from'./EmployeeDetails/EmployeeDetails';
-import {Link} from 'react-router-dom'
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-import tileData from'./employeedata';
-// import withMobileDialog from '@material-ui/core/withMobileDialog';
+import EmployeeAdd from './EmployeeAdd'
+import { Link } from 'react-router-dom'
+//import {connect} from 'react-redux';
+import AddIcon from '@material-ui/icons/Add'
+
+
+import * as firbase from "firebase"
 const styles = {
   card: {
     maxWidth: 345,
@@ -26,6 +26,8 @@ const styles = {
   },
 };
 
+
+
 class Employee extends Component {
   // static contextTypes = { 
   //   router: React.PropTypes.object 
@@ -33,23 +35,78 @@ class Employee extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      employeedetail:[],
       showComponent: false,
-      showFullDetail:false,
-      empdetails:{
-        empname:'',
-        key:'',
-        empimg:{},
+      showFullDetail: false,
+      employeeEdit:false,
+      empdetails: {
+        empname: '',
+        key: '',
+        empimg: {},
       }
     };
     this._onButtonClick = this._onButtonClick.bind(this);
-  }
+  
+  this.handleEmployeeEdit = this.handleEmployeeEdit.bind(this);
+  this.handleEmployeeEditcolse = this.handleEmployeeEditcolse.bind(this);
+  this.update=this.update.bind(this)
+}
 
+
+update(){
+  this.componentWillMount()
+}
+
+handleEmployeeEdit() {
+      // console.log("basic edit function")
+      // console.log(this.state.employeeEdit)
+      this.setState({
+        employeeEdit: true,
+    
+      })
+  
+    }
+  handleEmployeeEditcolse() {
+
+      // console.log("handleBasicEditcolse")
+  
+      this.setState({
+        employeeEdit: false,
+      })
+  
+    }
   _onButtonClick(tile) {
     this.setState({
       showComponent: true,
-      empdetails:{empname:tile.emp_name,empimg:tile.img,key:tile.key}
+      empdetails: { empname: tile.emp_name, empimg: tile.img, key: tile.key }
     });
 
+  }
+  componentWillMount(){
+
+    var _this=this;
+    var empList=[]
+
+    // console.log("running")
+
+    var db=firbase.firestore()
+    var docRef=db.collection("zyudlyemployee")
+
+
+    //var docRef = db.collection("cities").doc("SF");
+    docRef.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          // console.log(doc.id, " => ", doc.data());
+          empList.push(doc.data())
+      });
+
+
+     
+      _this.setState({employeedetail:empList})
+      // console.log("new data",_this.state.employeedetail)
+  });
+  
   }
   // _onViewClick(tile) {
 
@@ -61,63 +118,93 @@ class Employee extends Component {
   // //         avatar:this.state.empdetails.empimg
   // //     }
   // // });
-   
-  // }
-  render(){
-  const { classes } = this.props;
- 
-  return (
-    <div className="row">
-   
-       {tileData.map(tile => (
-          <div key={tile.key} className="col-xs-12 col-sm-6 col-md-4"style={{padding:'10px'}}>
-      <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          onClick={()=>{this._onButtonClick(tile)}}
-          component="img"
-          className={classes.media}
-          height="200"
-          image="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"
-          title=  {tile.emp_name}
-        
-        />
-           
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-          {tile.emp_name}
-          </Typography>
-    
-        </CardContent>
-      </CardActionArea>
-      <CardActions style={{justifyContent: 'center'}}>
-       <Link to={ `/employeedetail/${tile.key}`}><Button size="small" color="primary"
-        //  onClick={()=>{
-        //    this._onViewClick();
-        //  }}
-         >
-          View Details
-        </Button>
-        </Link> 
-      </CardActions>
-    </Card>
 
-    </div>
-       ))}
-      
-      {this.state.showComponent ?
-          <Employeeimage name={this.state.empdetails.empname} key={this.state.empdetails.key} image={this.state.empdetails.empimg} />:
-           null
-        } 
+  // }
+  componentDidMount() {
+    this.props.navhandler('Employee List')
+  }
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className="row">
+    
         
-      
+        {this.state.employeedetail.map((tile,index) => (
+          <div key={index} className="col-xs-12 col-sm-6 col-md-3" style={{ padding: '10px' }}>
+            <Card className={classes.card}>
+       
+         
+              <CardActionArea>
+                <CardMedia
+                  onClick={() => { this._onButtonClick(tile) }}
+                  component="img"
+                  className={classes.media}
+                  height="180"
+                  image={tile.img}
+                  title={tile.emp_name}
+                  style={{padding:0}}
+                />
+
+                <CardContent style={{padding:0}}>
+                  <Typography gutterBottom variant="headline" component="h2">
+                    {tile.emp_name}
+                  </Typography>
+
+                </CardContent>
+              </CardActionArea>
+              <CardActions style={{ justifyContent: 'center',padding:0 }}>
+                <Link  style={{textDecoration: 'none'}} to={`/employeedetail/${tile.uid}`}><Button size="small" color="primary"
+                //  onClick={()=>{
+                //    this._onViewClick();
+                //  }}
+                >
+                 View Details
+                 </Button>
+
+                </Link>
+                
+              </CardActions>
+            </Card>
+
+          </div>
+        ))}
+  <div className="col-xs-12 col-sm-6 col-md-3" style={{ padding: '10px'} }>
+      <Card className={classes.card} style={{height:253}}>
+         
+      <CardActions style={{ justifyContent: 'center',padding:46,backgroundColor:'#d8d8f1' }}>
+      <Button aria-label="Add" style={{ backgroundColor:"#d8d8f1"}} onClick={this.handleEmployeeEdit}  >
+<AddIcon variant='fab' style={{fontSize:75}} />
+
+</Button>
+{this.state.employeeEdit ?
+              <EmployeeAdd open={this.state.employeeEdit} handleClose={this.handleEmployeeEditcolse} update={this.update} /> :
+              null
+            }
+   <br/>
+
+      </CardActions>
+      <CardContent>
+
+<Typography gutterBottom variant="headline" component="h2">
+                   Add Employee
+                  </Typography>
+      </CardContent>
+    </Card>
+   </div>
+        {this.state.showComponent ?
+          <Employeeimage name={this.state.empdetails.empname} key={this.state.empdetails.key} image={this.state.empdetails.empimg} /> :
+          null
+        }
+
+
         {/* {this.state.showFullDetail ?
           <EmployeeDetails />:
            null
         }  */}
-    </div>
-  );
-}
+      </div>
+    );
+  }
 }
 
 Employee.propTypes = {
@@ -125,4 +212,4 @@ Employee.propTypes = {
 
 };
 
-export default  withStyles(styles) (Employee);
+export default withStyles(styles)(Employee)
